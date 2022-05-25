@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/home"
+        android:id="@+id/homeFragment"
         android:icon="@drawable/sel_btn_home_page"
-        android:title="@string/homepage" />
+        android:title="@string/home_page" />
 
     <item
-        android:id="@+id/community"
+        android:id="@+id/communityFragment"
         android:icon="@drawable/sel_btn_home_page"
-        android:title="@string/homepage"/>
+        android:title="@string/community_page" />
 
     <item
-        android:id="@+id/notice"
+        android:id="@+id/noticeFragment"
         android:icon="@drawable/sel_btn_home_page"
-        android:title="@string/homepage"/>
+        android:title="@string/notice_page" />
 
     <item
-        android:id="@+id/about"
+        android:id="@+id/aboutFragment"
         android:icon="@drawable/sel_btn_home_page"
-        android:title="@string/homepage"/>
+        android:title="@string/about_page" />
 </menu>

@@ -1,33 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+<layout>
 
-    <fragment
-        app:navGraph="@navigation/home"
-        app:defaultNavHost="true"
-        android:id="@+id/my_nav_host_fragment"
-        android:name="androidx.navigation.fragment.NavHostFragment"
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/loadsvg"
-        android:layout_width="@dimen/dimen_50dp"
-        android:layout_height="@dimen/dimen_50dp"
-        android:layout_gravity="center"
-        android:background="@color/teal_200"/>
+        <fragment
+            android:id="@+id/my_nav_host_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/nav_home" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        app:menu="@menu/menu_main"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_50dp"
-        app:itemTextColor="@color/sel_setting_switch_text_color"
-        app:itemIconTint="@color/grayDark"
-        app:labelVisibilityMode="labeled"/>
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_50dp"
+            app:itemIconTint="@color/grayDark"
+            app:itemTextColor="@color/sel_setting_switch_text_color"
+            app:labelVisibilityMode="labeled"
+            app:menu="@menu/menu_main" />
 
-</LinearLayout>
+    </LinearLayout>
+</layout>
