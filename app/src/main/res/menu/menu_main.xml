@@ -7,16 +7,16 @@
 
     <item
         android:id="@+id/communityFragment"
-        android:icon="@drawable/sel_btn_home_page"
+        android:icon="@drawable/sel_btn_community"
         android:title="@string/community_page" />
 
     <item
         android:id="@+id/noticeFragment"
-        android:icon="@drawable/sel_btn_home_page"
+        android:icon="@drawable/sel_btn_notification"
         android:title="@string/notice_page" />
 
     <item
         android:id="@+id/aboutFragment"
-        android:icon="@drawable/sel_btn_home_page"
+        android:icon="@drawable/sel_btn_mine"
         android:title="@string/about_page" />
 </menu>
