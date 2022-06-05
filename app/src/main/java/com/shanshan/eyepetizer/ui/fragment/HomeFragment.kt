@@ -6,16 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.FragmentManager
-import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
 import com.shanshan.eyepetizer.R
 import com.shanshan.eyepetizer.adapter.HomeViewPageAdapter
 import com.shanshan.eyepetizer.databinding.FragmentHomeBinding
 import com.shanshan.eyepetizer.ui.fragment.homepage.DailyFragment
-import com.shanshan.eyepetizer.ui.fragment.homepage.FindFragment
+import com.shanshan.eyepetizer.ui.fragment.homepage.DiscoveryFragment
 import com.shanshan.eyepetizer.ui.fragment.homepage.RecommendFragment
 import com.shanshan.eyepetizer.ui.view.HomeTabLayout
 
@@ -48,7 +44,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun initFragment() {
-        fragments.add(FindFragment())
+        fragments.add(DiscoveryFragment())
         fragments.add(RecommendFragment())
         fragments.add(DailyFragment())
     }
