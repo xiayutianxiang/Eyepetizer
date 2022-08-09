@@ -14,6 +14,7 @@ public class ResourceUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        
         return getColor("000000");
     }
 
@@ -37,5 +38,9 @@ public class ResourceUtils {
             e.printStackTrace();
         }
         return "";
+    }
+
+    public static int getDimen(int resId){
+        return BaseApplication.Companion.getContext().getResources().getDimensionPixelOffset(resId);
     }
 }

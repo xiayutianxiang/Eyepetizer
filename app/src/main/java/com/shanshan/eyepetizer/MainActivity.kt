@@ -6,7 +6,6 @@ import android.widget.ImageView
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.bumptech.glide.Glide
-import com.pixplicity.sharp.Sharp
 import com.shanshan.eyepetizer.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

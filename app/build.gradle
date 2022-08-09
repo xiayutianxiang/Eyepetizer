@@ -59,5 +59,10 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.0'
 
     //轮播图
-    implementation 'com.github.zhpanvip:bannerviewpager:3.5.4'
+    implementation 'com.github.zhpanvip:BannerViewPager:3.5.4'
+
+    //网络请求
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
 }
