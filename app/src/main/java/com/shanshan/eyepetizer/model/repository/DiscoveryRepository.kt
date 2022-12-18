@@ -6,5 +6,5 @@ import retrofit2.await
 
 class DiscoveryRepository {
 
-   fun getDiscoveryContent() = RetrofitManager.apiService.getDiscovery(Constants.DISCOVERY_URL)
+   fun getDiscoveryContent() = RetrofitManager.apiService.getDiscovery(Constants.WebUrl.DISCOVERY_URL)
 }

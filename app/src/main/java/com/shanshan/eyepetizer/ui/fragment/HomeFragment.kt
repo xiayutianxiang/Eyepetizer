@@ -44,7 +44,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun initFragment() {
-        fragments.add(DiscoveryFragment())
+        fragments.add(DiscoveryFragment.newInstance())
         fragments.add(RecommendFragment())
         fragments.add(DailyFragment())
     }

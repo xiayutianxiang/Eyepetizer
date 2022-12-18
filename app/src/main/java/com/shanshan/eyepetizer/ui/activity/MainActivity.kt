@@ -1,11 +1,10 @@
-package com.shanshan.eyepetizer
+package com.shanshan.eyepetizer.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ImageView
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
-import com.bumptech.glide.Glide
+import com.shanshan.eyepetizer.R
 import com.shanshan.eyepetizer.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

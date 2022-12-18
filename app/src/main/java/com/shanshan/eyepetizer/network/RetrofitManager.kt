@@ -19,7 +19,7 @@ object RetrofitManager {
         .build()
 
     private val mRetrofit: Retrofit = Retrofit.Builder()
-        .baseUrl(Constants.BASE_URL)
+        .baseUrl(Constants.WebUrl.BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 

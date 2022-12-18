@@ -14,6 +14,8 @@ class DiscoveryFragment : BaseFragment<FragmentDicoveryBinding, DiscoveryViewMod
 
     companion object {
         const val TAG = "DiscoveryFragment"
+
+        fun newInstance() = DiscoveryFragment()
     }
 
     override fun initView() {
@@ -24,13 +26,16 @@ class DiscoveryFragment : BaseFragment<FragmentDicoveryBinding, DiscoveryViewMod
         return R.layout.fragment_dicovery
     }
 
+    /**
+     * 加载发现页数据
+     */
     override fun initData() {
         viewModel.getDiscoveryData()
     }
 
     override fun initObserver() {
         viewModel.discoveryData.observe(this, Observer {
-            if(it!=null) {
+            if (it != null) {
                 adapter = DiscoveryPageAdapter(this, it)
                 binding.homeRv.layoutManager = LinearLayoutManager(context)
                 binding.homeRv.adapter = adapter

@@ -57,7 +57,7 @@ data class Header(
     val id: Int,
     val label: Any,
     val labelList: Any,
-    val rightText: Any,
+    val rightText: String,
     val subTitle: Any,
     val subTitleFont: Any,
     val textAlign: String,
