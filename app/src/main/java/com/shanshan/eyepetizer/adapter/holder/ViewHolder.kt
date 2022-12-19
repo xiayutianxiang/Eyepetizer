@@ -25,11 +25,13 @@ class HorizontalScrollCardHolder(itemView: View) : RecyclerView.ViewHolder(itemV
     val bannerViewPager: BannerViewPager<ItemX> = itemView.findViewById(R.id.banner_view)
 }
 
-class SpecialSquareCardCollectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    val recyclerView = itemView.findViewById<RecyclerView>(R.id.item_special_recyclerView)
+class SpecialTextHeader5ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val tvTitle = itemView.findViewById<TextView>(R.id.tvTitle)
-    val tvRightText = itemView.findViewById<TextView>(R.id.tvRightText)
-    val ivInto = itemView.findViewById<ImageView>(R.id.ivInto)
+}
+
+class SpecialCardTypeBriefCardHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    val tvTitle = itemView.findViewById<TextView>(R.id.tvTitle)
+    val ivPicture = itemView.findViewById<ImageView>(R.id.ivPicture)
 }
 
 /**
@@ -49,6 +51,7 @@ class DiscoveryItemViewType {
         const val TEXT_CARD_FOOTER2 = 2
         const val TEXT_CARD_FOOTER3 = 3
 
+        const val CARD_TYPE_BRIEF = 11
     }
 }
 
@@ -66,15 +69,26 @@ object RecyclerViewUtil {
                         false
                     )
                 )
-
-            DiscoveryItemViewType.SPECIAL_SQUARE_CARD_COLLECTION ->
-                SpecialSquareCardCollectionViewHolder(
+            //header5, such 热门分类
+            DiscoveryItemViewType.TEXT_CARD_HEADER5 ->
+                SpecialTextHeader5ViewHolder(
                     LayoutInflater.from(parent.context).inflate(
-                        R.layout.item_special_square_card_collection,
+                        R.layout.item_special_text_header5,
                         parent,
                         false
                     )
                 )
+
+            //BriefCard type
+            DiscoveryItemViewType.CARD_TYPE_BRIEF ->
+                SpecialCardTypeBriefCardHolder(
+                    LayoutInflater.from(parent.context).inflate(
+                        R.layout.item_special_type_brief_card,
+                        parent,
+                        false
+                    )
+                )
+
             else -> EmptyViewHolder(View(parent.context))
         }
     }
@@ -86,13 +100,6 @@ object RecyclerViewUtil {
             else -> DiscoveryItemViewType.UNKNOWN
         }
 
-        "specialSquareCardCollection" -> {
-            when (dataType) {
-                "ItemCollection" -> DiscoveryItemViewType.SPECIAL_SQUARE_CARD_COLLECTION
-                else -> DiscoveryItemViewType.UNKNOWN
-            }
-        }
-
         else -> DiscoveryItemViewType.UNKNOWN
     }
 
@@ -100,11 +107,30 @@ object RecyclerViewUtil {
     fun getItemViewType(item: Item): Int {
         return when (item.type) {
             "textCard" -> getTextCardType(item.data.type)
+
+            "briefCard" -> getTextItemCardType(item.data.dataType, item.data.follow.itemType)
             else
             -> getItemViewType(item.type, item.data.dataType)
         }
     }
 
+    /**
+     * 获取每个标题下item的类型
+     */
+    private fun getTextItemCardType(dataType: String, followType: String): Int {
+        return when (dataType) {
+            "BriefCard" ->
+                when (followType) {
+                    "category" -> DiscoveryItemViewType.CARD_TYPE_BRIEF
+                    else -> DiscoveryItemViewType.UNKNOWN
+                }
+            else -> DiscoveryItemViewType.UNKNOWN
+        }
+    }
+
+    /**
+     * 获取标题header的item类型
+     */
     private fun getTextCardType(type: String): Int {
         return when (type) {
             "header4" -> DiscoveryItemViewType.TEXT_CARD_HEADER4

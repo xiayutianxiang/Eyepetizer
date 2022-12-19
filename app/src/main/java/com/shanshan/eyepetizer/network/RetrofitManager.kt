@@ -16,11 +16,13 @@ object RetrofitManager {
     private val okhttpClient = OkHttpClient.Builder()
         .callTimeout(300,TimeUnit.SECONDS)
         .retryOnConnectionFailure(true)
+        .addInterceptor(LoggingInterceptor())
         .build()
 
     private val mRetrofit: Retrofit = Retrofit.Builder()
         .baseUrl(Constants.WebUrl.BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
+        .client(okhttpClient)
         .build()
 
     val apiService: ApiService = mRetrofit.create(ApiService::class.java)
