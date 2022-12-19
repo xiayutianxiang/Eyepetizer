@@ -28,7 +28,7 @@ data class Data(
     val dataType: String,
     val description: String,
     val expert: Boolean,
-    val follow: Any,
+    val follow: Follow,
     val footer: Any,
     val haveReward: Boolean,
     val header: Header,
@@ -108,4 +108,10 @@ data class Label(
     val card: String,
     val detail: Any,
     val text: String
+)
+
+data class Follow(
+    val itemType: String,
+    val itemId: Int,
+    val followed: Boolean
 )

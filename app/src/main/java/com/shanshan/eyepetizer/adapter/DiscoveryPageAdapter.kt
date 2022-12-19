@@ -1,29 +1,20 @@
 package com.shanshan.eyepetizer.adapter
 
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.shanshan.eyepetizer.R
 import com.shanshan.eyepetizer.adapter.banner.BannerViewAdapter
-import com.shanshan.eyepetizer.adapter.holder.DiscoveryItemViewType
-import com.shanshan.eyepetizer.adapter.holder.HorizontalScrollCardHolder
-import com.shanshan.eyepetizer.adapter.holder.RecyclerViewUtil
-import com.shanshan.eyepetizer.adapter.holder.SpecialSquareCardCollectionViewHolder
+import com.shanshan.eyepetizer.adapter.discovery.ColumnItemCollectionAdapter
+import com.shanshan.eyepetizer.adapter.holder.*
 import com.shanshan.eyepetizer.data.DiscoveryData
-import com.shanshan.eyepetizer.data.ItemX
 import com.shanshan.eyepetizer.ui.fragment.homepage.DiscoveryFragment
 import com.shanshan.eyepetizer.utils.LogUtils
 import com.shanshan.eyepetizer.utils.ResourceUtils
 import com.shanshan.eyepetizer.utils.dp2px
-import com.zhpan.bannerview.BannerViewPager
 import com.zhpan.bannerview.constants.PageStyle
-import kotlin.properties.ReadOnlyProperty
 
 class DiscoveryPageAdapter(
     val fragment: DiscoveryFragment,
@@ -31,12 +22,11 @@ class DiscoveryPageAdapter(
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
-        val TAG = "DiscoveryPageAdapter"
+        const val TAG = "DiscoveryPageAdapter"
     }
 
     override fun getItemViewType(position: Int): Int {
-        LogUtils.d(TAG, "position ---> $position" +
-                "")
+        LogUtils.d(TAG, "position ---> $position")
         return RecyclerViewUtil.getItemViewType(dataList.itemList[position])
     }
 
@@ -62,6 +52,23 @@ class DiscoveryPageAdapter(
                     removeDefaultPageTransformer()
                     create(item.data.itemList)
                 }
+            }
+
+            is SpecialTextHeader5ViewHolder -> {
+                //设置标题
+                holder.tvTitle.text = item.data.text
+            }
+
+            is SpecialCardTypeBriefCardHolder -> {
+                holder.tvTitle.text = item.data.title
+                Glide.with(holder.itemView).load(item.data.icon).into(holder.ivPicture)
+            }
+
+            is SpecialColumnCardListHolder -> {
+                holder.tvTitle.text = item.data.header.title
+                holder.columnRecyclerView.layoutManager =
+                    GridLayoutManager(holder.itemView.context, 2)
+                holder.columnRecyclerView.adapter = ColumnItemCollectionAdapter(item.data.itemList)
             }
         }
     }
