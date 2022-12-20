@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="280dp"
     android:orientation="vertical"
-    android:paddingStart="@dimen/listSpaceSize"
+    android:paddingHorizontal="@dimen/dimen_14dp"
     tools:ignore="RtlSymmetry">
 
     <com.shanshan.eyepetizer.ui.view.TypefaceTextView
@@ -17,6 +17,19 @@
         android:textSize="22sp"
         app:typeface="fzdb1Typeface"
         tools:text="热门分类" />
+
+    <com.shanshan.eyepetizer.ui.view.TypefaceTextView
+        android:id="@+id/tv_right_text"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dimen_53dp"
+        android:layout_alignParentEnd="true"
+        android:drawableEnd="@drawable/ic_into_blue_24dp"
+        android:gravity="center"
+        android:textColor="@color/blue"
+        android:textSize="22sp"
+        tools:ignore="RelativeOverlap"
+        tools:text="查看全部" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/column_card_recyclerView"
@@ -30,7 +43,7 @@
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/column_card_recyclerView"
         android:layout_marginEnd="@dimen/listSpaceSize"
         android:background="@color/gray" />
 </RelativeLayout>

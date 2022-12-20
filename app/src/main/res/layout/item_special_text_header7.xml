@@ -18,6 +18,19 @@
         app:typeface="fzdb1Typeface"
         tools:text="热门分类" />
 
+    <com.shanshan.eyepetizer.ui.view.TypefaceTextView
+        android:id="@+id/tv_right_text"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dimen_53dp"
+        android:layout_alignParentEnd="true"
+        android:drawableEnd="@drawable/ic_into_blue_24dp"
+        android:gravity="center"
+        android:textColor="@color/blue"
+        android:textSize="22sp"
+        app:typeface="fzdb1Typeface"
+        tools:ignore="RelativeOverlap"
+        tools:text="查看全部" />
+
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"

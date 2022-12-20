@@ -70,6 +70,17 @@ class DiscoveryPageAdapter(
                     GridLayoutManager(holder.itemView.context, 2)
                 holder.columnRecyclerView.adapter = ColumnItemCollectionAdapter(item.data.itemList)
             }
+
+            is SpecialTextHeader7ViewHolder -> {
+                holder.tvTitle.text = item.data.text
+                holder.tvRightText.text = item.data.rightText
+            }
+
+            is SpecialTagBriefCardViewHolder -> {
+                Glide.with(holder.itemView.context).load(item.data.icon).into(holder.ivPicture)
+                holder.tvTitle.text = item.data.title
+                holder.tvDescription.text = item.data.description
+            }
         }
     }
 
