@@ -178,6 +178,7 @@ object RecyclerViewUtil {
             "BriefCard" ->
                 when (followType) {
                     "category" -> DiscoveryItemViewType.CARD_TYPE_BRIEF
+                    "author" -> DiscoveryItemViewType.TAG_BRIEF_CARD
                     else -> DiscoveryItemViewType.UNKNOWN
                 }
             "TagBriefCard" -> {

@@ -22,6 +22,7 @@
         android:id="@+id/tv_right_text"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dimen_53dp"
+        android:layout_marginEnd="@dimen/dimen_14dp"
         android:layout_alignParentEnd="true"
         android:drawableEnd="@drawable/ic_into_blue_24dp"
         android:gravity="center"
