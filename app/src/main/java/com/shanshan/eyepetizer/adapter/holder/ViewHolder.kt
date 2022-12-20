@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.shanshan.eyepetizer.R
 import com.shanshan.eyepetizer.data.Item
 import com.shanshan.eyepetizer.data.ItemX
+import com.shanshan.eyepetizer.utils.LogUtils
 import com.zhpan.bannerview.BannerViewPager
 
 /**
@@ -172,14 +173,17 @@ object RecyclerViewUtil {
     /**
      * 获取每个标题下item的类型
      */
-    private fun getTextItemCardType(type: String, dataType: String): Int {
-        return when (type) {
+    private fun getTextItemCardType(dataType: String, followType: String): Int {
+        return when (dataType) {
             "BriefCard" ->
-                when (dataType) {
+                when (followType) {
                     "category" -> DiscoveryItemViewType.CARD_TYPE_BRIEF
-                    "TagBriefCard" -> DiscoveryItemViewType.TAG_BRIEF_CARD
                     else -> DiscoveryItemViewType.UNKNOWN
                 }
+            "TagBriefCard" -> {
+                LogUtils.d("TAG", "TagBriefCard")
+                DiscoveryItemViewType.TAG_BRIEF_CARD
+            }
             else -> DiscoveryItemViewType.UNKNOWN
         }
     }

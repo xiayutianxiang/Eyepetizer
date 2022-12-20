@@ -1,5 +1,6 @@
 package com.shanshan.eyepetizer.adapter
 
+import android.annotation.SuppressLint
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
@@ -77,6 +78,7 @@ class DiscoveryPageAdapter(
             }
 
             is SpecialTagBriefCardViewHolder -> {
+                LogUtils.d("TAG",item.data.icon)
                 Glide.with(holder.itemView.context).load(item.data.icon).into(holder.ivPicture)
                 holder.tvTitle.text = item.data.title
                 holder.tvDescription.text = item.data.description
