@@ -1,6 +1,6 @@
 package com.shanshan.eyepetizer.data
 
-data class RecommendData(
+data class HomeRecommendData(
     val adExist: Boolean,
     val count: Int,
     val itemList: List<Item>,
@@ -8,7 +8,7 @@ data class RecommendData(
     val total: Int
 ) {
 
-    data class Data(
+    data class Item(
         val actionUrl: String,
         val ad: Boolean,
         val adTrack: Any,

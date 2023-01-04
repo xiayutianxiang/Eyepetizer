@@ -19,7 +19,7 @@ class DiscoveryViewModel : ViewModel() {
     var discoveryData = MutableLiveData<DiscoveryData>()
 
     fun getDiscoveryData() {
-        discoveryRepo.getDiscoveryContent().enqueue(object : Callback<DiscoveryData> {
+        discoveryRepo.getHomeDiscoveryContent().enqueue(object : Callback<DiscoveryData> {
             override fun onResponse(
                 call: Call<DiscoveryData>,
                 response: Response<DiscoveryData>

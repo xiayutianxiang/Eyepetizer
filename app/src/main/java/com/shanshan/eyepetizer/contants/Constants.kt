@@ -13,7 +13,10 @@ class Constants {
 
             //推荐页URL
             const val RECOMMEND_URL = "api/v5/index/tab/allRec"
-            const val PAGE_SIZE = 50
         }
+    }
+
+    companion object{
+        const val PAGE_SIZE = 50
     }
 }
