@@ -71,6 +71,11 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
 
+    implementation project(':mylibrary')
+
+    //paging组件
+    implementation "androidx.paging:paging-runtime:3.1.1"
+
     //第三方库
     implementation 'com.pixplicity.sharp:library:1.1.0'
     implementation 'com.github.bumptech.glide:glide:4.13.0'

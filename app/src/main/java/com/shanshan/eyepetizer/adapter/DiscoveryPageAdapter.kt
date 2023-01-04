@@ -37,7 +37,6 @@ class DiscoveryPageAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = dataList.itemList[position]
-
         when (holder) {
             //Banner类型
             is HorizontalScrollCardHolder -> {
