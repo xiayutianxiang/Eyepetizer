@@ -13,4 +13,6 @@
 
     <string name="plus_follow">+关注</string>
     <string name="title_activity_main">MainActivity</string>
+
+    <string name="advert">广告</string>
 </resources>

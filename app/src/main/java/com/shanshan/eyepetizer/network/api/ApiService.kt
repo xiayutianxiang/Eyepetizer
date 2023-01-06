@@ -1,7 +1,7 @@
 package com.shanshan.eyepetizer.network.api
 
+import HomeRecommendData
 import com.shanshan.eyepetizer.data.DiscoveryData
-import com.shanshan.eyepetizer.data.HomeRecommendData
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Url

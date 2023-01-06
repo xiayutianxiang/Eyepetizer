@@ -1,19 +1,46 @@
 package com.shanshan.eyepetizer.ui.fragment.homepage
 
+import android.os.Bundle
+import android.provider.SyncStateContract
+import android.view.View
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.PagingDataAdapter
 import androidx.paging.map
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.shanshan.eyepetizer.R
+import com.shanshan.eyepetizer.adapter.home.recommend.RecommendAdapter
 import com.shanshan.eyepetizer.base.BaseFragment
+import com.shanshan.eyepetizer.contants.Constants
 import com.shanshan.eyepetizer.databinding.FragmentRecommendBinding
 import com.shanshan.eyepetizer.model.HomeRecommendViewModel
+import com.shanshan.eyepetizer.network.RetrofitManager
 import com.shanshan.eyepetizer.utils.LogUtils
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class RecommendFragment : BaseFragment<FragmentRecommendBinding, HomeRecommendViewModel>() {
 
+    private lateinit var recommendAdapter: RecommendAdapter
+
     companion object {
         private const val TAG = "RecommendFragment"
         fun newInstance() = RecommendFragment()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        recommendAdapter = RecommendAdapter()
+        binding.recyclerView.layoutManager = LinearLayoutManager(activity)
+        binding.recyclerView.adapter = recommendAdapter
+
+        lifecycleScope.launch {
+            viewModel.getPagingData().collectLatest {
+                recommendAdapter.submitData(it)
+            }
+        }
+
     }
 
     override fun initView() {
@@ -21,14 +48,7 @@ class RecommendFragment : BaseFragment<FragmentRecommendBinding, HomeRecommendVi
     }
 
     override fun initData() {
-        LogUtils.d(TAG,"start load data")
-        lifecycleScope.launch {
-            viewModel.getPagingData().collect {
-                it.map {
-                    LogUtils.d(TAG,"item ---> $it")
-                }
-            }
-        }
+
     }
 
     override fun initObserver() {
