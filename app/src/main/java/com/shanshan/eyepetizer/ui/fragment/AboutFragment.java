@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.shanshan.eyepetizer.R;
-import com.shanshan.eyepetizer.model.AboutViewModel;
+import com.shanshan.eyepetizer.viewmodel.AboutViewModel;
 
 public class AboutFragment extends Fragment {
 

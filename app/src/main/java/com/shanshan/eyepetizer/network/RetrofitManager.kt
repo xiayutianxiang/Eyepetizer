@@ -1,8 +1,11 @@
 package com.shanshan.eyepetizer.network
 
+import android.os.Build
 import com.shanshan.eyepetizer.contants.Constants
 import com.shanshan.eyepetizer.network.api.ApiService
+import com.shanshan.eyepetizer.utils.GlobalUtil
 import com.shanshan.eyepetizer.utils.LogUtils
+import com.shanshan.eyepetizer.utils.screenPixel
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -17,6 +20,7 @@ object RetrofitManager {
         .callTimeout(300,TimeUnit.SECONDS)
         .retryOnConnectionFailure(true)
         .addInterceptor(LoggingInterceptor())
+        .addInterceptor(BasicParamsInterceptor())
         .build()
 
     private val mRetrofit: Retrofit = Retrofit.Builder()
@@ -49,6 +53,28 @@ object RetrofitManager {
 
         companion object {
             const val TAG = "LoggingInterceptor"
+        }
+    }
+
+    class BasicParamsInterceptor : Interceptor {
+        override fun intercept(chain: Interceptor.Chain): Response {
+            val originalRequest = chain.request()
+            val originalHttpUrl = originalRequest.url()
+            val url = originalHttpUrl.newBuilder().apply {
+               // addQueryParameter("udid", GlobalUtil.getDeviceSerial())
+                //针对开眼官方【首页推荐 】api 变动， 需要单独做处理。原因：附加 vc、vn 这两个字段后，请求接口无响应。
+                /*if (!originalHttpUrl.toString().contains(MainPageService.HOMEPAGE_RECOMMEND_URL)) {
+                    addQueryParameter("vc", GlobalUtil.eyepetizerVersionCode.toString())
+                    addQueryParameter("vn", GlobalUtil.eyepetizerVersionName)
+                }*/
+                addQueryParameter("size", screenPixel())
+                addQueryParameter("deviceModel", GlobalUtil.deviceModel)
+                addQueryParameter("first_channel", GlobalUtil.deviceBrand)
+                addQueryParameter("last_channel", GlobalUtil.deviceBrand)
+                addQueryParameter("system_version_code", "${Build.VERSION.SDK_INT}")
+            }.build()
+            val request = originalRequest.newBuilder().url(url).build()
+            return chain.proceed(request)
         }
     }
 }

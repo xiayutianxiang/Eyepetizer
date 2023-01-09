@@ -6,7 +6,7 @@ import com.shanshan.eyepetizer.R
 import com.shanshan.eyepetizer.adapter.DiscoveryPageAdapter
 import com.shanshan.eyepetizer.base.BaseFragment
 import com.shanshan.eyepetizer.databinding.FragmentDicoveryBinding
-import com.shanshan.eyepetizer.model.DiscoveryViewModel
+import com.shanshan.eyepetizer.viewmodel.DiscoveryViewModel
 
 class DiscoveryFragment : BaseFragment<FragmentDicoveryBinding, DiscoveryViewModel>() {
 

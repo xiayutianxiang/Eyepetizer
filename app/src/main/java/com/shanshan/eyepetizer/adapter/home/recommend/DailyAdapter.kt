@@ -1,41 +1,34 @@
 package com.shanshan.eyepetizer.adapter.home.recommend
 
 import android.view.ViewGroup
-import androidx.core.graphics.convertTo
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.shanshan.eyepetizer.adapter.holder.RecyclerViewUtil
 import com.shanshan.eyepetizer.adapter.holder.SpecialFollowCardViewHolder
 import com.shanshan.eyepetizer.adapter.holder.SpecialTextHeader5ViewHolder
-import com.shanshan.eyepetizer.adapter.holder.SpecialVideoSmallCardViewHolder
+import com.shanshan.eyepetizer.data.HomeDailyData
 import com.shanshan.eyepetizer.ui.extension.conversionVideoDuration
 import com.shanshan.eyepetizer.ui.extension.load
-import com.shanshan.eyepetizer.utils.LogUtils
 
-class RecommendAdapter :
-    PagingDataAdapter<HomeRecommendData.Item, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
+class DailyAdapter : PagingDataAdapter<HomeDailyData.Item, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
 
     companion object {
-        const val TAG = "CommendAdapter"
-
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<HomeRecommendData.Item>() {
-
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<HomeDailyData.Item>() {
             override fun areItemsTheSame(
-                oldItem: HomeRecommendData.Item,
-                newItem: HomeRecommendData.Item
-            ) = oldItem.id == newItem.id
+                oldItem: HomeDailyData.Item,
+                newItem: HomeDailyData.Item
+            ): Boolean {
+                return oldItem.id == newItem.id
+            }
 
             override fun areContentsTheSame(
-                oldItem: HomeRecommendData.Item,
-                newItem: HomeRecommendData.Item
-            ) = oldItem == newItem
+                oldItem: HomeDailyData.Item,
+                newItem: HomeDailyData.Item
+            ): Boolean {
+                return oldItem == newItem
+            }
         }
-    }
-
-    override fun getItemCount(): Int {
-        LogUtils.d(TAG, "count ---> ")
-        return super.getItemCount()
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -44,7 +37,6 @@ class RecommendAdapter :
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = getItem(position)!!
-
         when (holder) {
             is SpecialTextHeader5ViewHolder -> {
                 holder.tvTitle.text = item.data.text
@@ -57,14 +49,6 @@ class RecommendAdapter :
                 holder.binding.tvVideoDuration.text =
                     item.data.content.data.duration.conversionVideoDuration()
                 holder.binding.tvTitle.text = item.data.header.title
-            }
-
-            is SpecialVideoSmallCardViewHolder -> {
-                holder.binding.ivPicture.load(item.data.cover.feed, 4f)
-                holder.binding.tvDescription.text =
-                    if (item.data.library == "DAILY") "#${item.data.category} /开眼精选" else "#${item.data.category}"
-                holder.binding.tvTitle.text = item.data.title
-                holder.binding.tvVideoDuration.text = item.data.duration.conversionVideoDuration()
             }
         }
     }

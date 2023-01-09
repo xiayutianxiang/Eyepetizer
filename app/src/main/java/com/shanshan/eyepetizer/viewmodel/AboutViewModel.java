@@ -1,4 +1,4 @@
-package com.shanshan.eyepetizer.model;
+package com.shanshan.eyepetizer.viewmodel;
 
 import androidx.lifecycle.ViewModel;
 

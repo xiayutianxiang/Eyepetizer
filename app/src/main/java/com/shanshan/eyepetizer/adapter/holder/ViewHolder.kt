@@ -8,9 +8,11 @@ import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.shanshan.eyepetizer.R
+import com.shanshan.eyepetizer.data.HomeDailyData
 import com.shanshan.eyepetizer.data.Item
 import com.shanshan.eyepetizer.data.ItemX
 import com.shanshan.eyepetizer.databinding.ItemFollowCardTypeBinding
+import com.shanshan.eyepetizer.databinding.ItemVideoSmallCardTypeBinding
 import com.shanshan.eyepetizer.utils.LogUtils
 import com.zhpan.bannerview.BannerViewPager
 
@@ -57,6 +59,9 @@ class SpecialTagBriefCardViewHolder(itemView: View) : RecyclerView.ViewHolder(it
 class SpecialFollowCardViewHolder(val binding: ItemFollowCardTypeBinding) :
     RecyclerView.ViewHolder(binding.root)
 
+class SpecialVideoSmallCardViewHolder(val binding: ItemVideoSmallCardTypeBinding) :
+    RecyclerView.ViewHolder(binding.root)
+
 /**
  * 条目类型
  */
@@ -79,6 +84,8 @@ class ItemViewType {
         const val TAG_BRIEF_CARD = 13
 
         const val FOLLOW_CARD = 14
+
+        const val VIDEO_SMALL_CARD = 15
     }
 }
 
@@ -154,6 +161,15 @@ object RecyclerViewUtil {
                     )
                 )
 
+            ItemViewType.VIDEO_SMALL_CARD ->
+                SpecialVideoSmallCardViewHolder(
+                    ItemVideoSmallCardTypeBinding.inflate(
+                        LayoutInflater.from(
+                            parent.context
+                        ), parent, false
+                    )
+                )
+
             else -> EmptyViewHolder(View(parent.context))
         }
     }
@@ -172,6 +188,11 @@ object RecyclerViewUtil {
 
         "followCard" -> when (dataType) {
             "FollowCard" -> ItemViewType.FOLLOW_CARD
+            else -> ItemViewType.UNKNOWN
+        }
+
+        "videoSmallCard" -> when (dataType) {
+            "VideoBeanForClient" -> ItemViewType.VIDEO_SMALL_CARD
             else -> ItemViewType.UNKNOWN
         }
 
@@ -226,6 +247,13 @@ object RecyclerViewUtil {
     }
 
     fun getItemViewType(item: HomeRecommendData.Item): Int {
+        return when (item.type) {
+            "textCard" -> getTextCardType(item.data.type, item.data.dataType)
+            else -> getItemViewType(item.type, item.data.dataType)
+        }
+    }
+
+    fun getItemViewType(item: HomeDailyData.Item): Int {
         return when (item.type) {
             "textCard" -> getTextCardType(item.data.type, item.data.dataType)
             else -> getItemViewType(item.type, item.data.dataType)

@@ -1,9 +1,9 @@
-package com.shanshan.eyepetizer.model
+package com.shanshan.eyepetizer.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.shanshan.eyepetizer.data.DiscoveryData
-import com.shanshan.eyepetizer.model.repository.DiscoveryRepository
+import com.shanshan.eyepetizer.viewmodel.repository.DiscoveryRepository
 import com.shanshan.eyepetizer.utils.LogUtils
 import retrofit2.Call
 import retrofit2.Callback

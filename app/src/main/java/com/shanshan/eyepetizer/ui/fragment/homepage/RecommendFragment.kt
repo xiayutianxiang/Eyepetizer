@@ -1,21 +1,14 @@
 package com.shanshan.eyepetizer.ui.fragment.homepage
 
 import android.os.Bundle
-import android.provider.SyncStateContract
 import android.view.View
 import androidx.lifecycle.lifecycleScope
-import androidx.paging.PagingDataAdapter
-import androidx.paging.map
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shanshan.eyepetizer.R
 import com.shanshan.eyepetizer.adapter.home.recommend.RecommendAdapter
 import com.shanshan.eyepetizer.base.BaseFragment
-import com.shanshan.eyepetizer.contants.Constants
 import com.shanshan.eyepetizer.databinding.FragmentRecommendBinding
-import com.shanshan.eyepetizer.model.HomeRecommendViewModel
-import com.shanshan.eyepetizer.network.RetrofitManager
-import com.shanshan.eyepetizer.utils.LogUtils
-import kotlinx.coroutines.flow.collect
+import com.shanshan.eyepetizer.viewmodel.HomeRecommendViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
