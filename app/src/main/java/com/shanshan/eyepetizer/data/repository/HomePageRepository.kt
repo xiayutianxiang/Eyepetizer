@@ -1,4 +1,4 @@
-package com.shanshan.eyepetizer.viewmodel.repository
+package com.shanshan.eyepetizer.data.repository
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -10,7 +10,7 @@ import com.shanshan.eyepetizer.data.pagingsource.HomeRecommendPagingSource
 import com.shanshan.eyepetizer.network.RetrofitManager
 import kotlinx.coroutines.flow.Flow
 
-class DiscoveryRepository() {
+class HomePageRepository {
 
     //获取发现页
     fun getHomeDiscoveryContent() =
@@ -28,13 +28,13 @@ class DiscoveryRepository() {
     }
 
     //获取首页日报
-    fun getHomeDailyPagingData() : Flow<PagingData<HomeDailyData.Item>>{
+    fun getHomeDailyPagingData(): Flow<PagingData<HomeDailyData.Item>> {
         return Pager(
             config = PagingConfig(
                 Constants.DAILY_PAGE_SIZE,
                 initialLoadSize = Constants.DAILY_PAGE_SIZE * 3
             ),
-            pagingSourceFactory = {HomeDailyPagingSource()}
+            pagingSourceFactory = { HomeDailyPagingSource() }
         ).flow
     }
 }

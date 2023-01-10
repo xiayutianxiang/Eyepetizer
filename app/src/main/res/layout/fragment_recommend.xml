@@ -11,11 +11,17 @@
         android:layout_height="match_parent"
         tools:context=".ui.fragment.homepage.RecommendFragment">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <com.scwang.smart.refresh.layout.SmartRefreshLayout
+            android:id="@+id/refresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment" />
+            android:layout_height="match_parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/hello_blank_fragment" />
+        </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
 
     </FrameLayout>
 </layout>

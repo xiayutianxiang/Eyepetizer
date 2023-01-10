@@ -3,7 +3,7 @@ package com.shanshan.eyepetizer.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.shanshan.eyepetizer.data.DiscoveryData
-import com.shanshan.eyepetizer.viewmodel.repository.DiscoveryRepository
+import com.shanshan.eyepetizer.data.repository.HomePageRepository
 import com.shanshan.eyepetizer.utils.LogUtils
 import retrofit2.Call
 import retrofit2.Callback
@@ -13,7 +13,7 @@ import java.net.HttpURLConnection
 class DiscoveryViewModel : ViewModel() {
 
     private val discoveryRepo by lazy {
-        DiscoveryRepository()
+        HomePageRepository()
     }
 
     var discoveryData = MutableLiveData<DiscoveryData>()
