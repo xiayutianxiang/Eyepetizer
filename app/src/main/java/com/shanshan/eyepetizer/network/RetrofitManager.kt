@@ -12,6 +12,7 @@ import okhttp3.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 object RetrofitManager {
@@ -20,6 +21,7 @@ object RetrofitManager {
         .callTimeout(300,TimeUnit.SECONDS)
         .retryOnConnectionFailure(true)
         .addInterceptor(LoggingInterceptor())
+        .addInterceptor(HeaderInterceptor())
         .addInterceptor(BasicParamsInterceptor())
         .build()
 
@@ -63,10 +65,10 @@ object RetrofitManager {
             val url = originalHttpUrl.newBuilder().apply {
                // addQueryParameter("udid", GlobalUtil.getDeviceSerial())
                 //针对开眼官方【首页推荐 】api 变动， 需要单独做处理。原因：附加 vc、vn 这两个字段后，请求接口无响应。
-                /*if (!originalHttpUrl.toString().contains(MainPageService.HOMEPAGE_RECOMMEND_URL)) {
+                if (!originalHttpUrl.toString().contains(Constants.WebUrl.RECOMMEND_URL)) {
                     addQueryParameter("vc", GlobalUtil.eyepetizerVersionCode.toString())
                     addQueryParameter("vn", GlobalUtil.eyepetizerVersionName)
-                }*/
+                }
                 addQueryParameter("size", screenPixel())
                 addQueryParameter("deviceModel", GlobalUtil.deviceModel)
                 addQueryParameter("first_channel", GlobalUtil.deviceBrand)
@@ -74,6 +76,18 @@ object RetrofitManager {
                 addQueryParameter("system_version_code", "${Build.VERSION.SDK_INT}")
             }.build()
             val request = originalRequest.newBuilder().url(url).build()
+            return chain.proceed(request)
+        }
+    }
+
+    class HeaderInterceptor : Interceptor {
+        override fun intercept(chain: Interceptor.Chain): Response {
+            val originalRequest = chain.request()
+            val request = originalRequest.newBuilder().apply {
+                header("model", "Android")
+                header("If-Modified-Since", "${Date()}")
+                header("User-Agent", System.getProperty("http.agent") ?: "unknown")
+            }.build()
             return chain.proceed(request)
         }
     }

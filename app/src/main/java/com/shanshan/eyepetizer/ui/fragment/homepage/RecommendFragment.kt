@@ -9,13 +9,12 @@ import com.scwang.smart.refresh.layout.constant.RefreshState
 import com.shanshan.eyepetizer.R
 import com.shanshan.eyepetizer.adapter.home.recommend.RecommendAdapter
 import com.shanshan.eyepetizer.base.BaseFragment
-import com.shanshan.eyepetizer.databinding.FragmentDailyBinding
-import com.shanshan.eyepetizer.databinding.FragmentRecommendBinding
+import com.shanshan.eyepetizer.databinding.FragmentCommBinding
 import com.shanshan.eyepetizer.viewmodel.HomeRecommendViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class RecommendFragment : BaseFragment<FragmentDailyBinding, HomeRecommendViewModel>() {
+class RecommendFragment : BaseFragment<FragmentCommBinding, HomeRecommendViewModel>() {
 
     private lateinit var recommendAdapter: RecommendAdapter
 
@@ -96,10 +95,6 @@ class RecommendFragment : BaseFragment<FragmentDailyBinding, HomeRecommendViewMo
         }
     }
 
-    override fun initView() {
-
-    }
-
     override fun initData() {
 
     }
@@ -109,6 +104,6 @@ class RecommendFragment : BaseFragment<FragmentDailyBinding, HomeRecommendViewMo
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.fragment_daily
+        return R.layout.fragment_comm
     }
 }

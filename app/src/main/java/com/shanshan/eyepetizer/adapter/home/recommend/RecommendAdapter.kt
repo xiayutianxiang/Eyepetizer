@@ -1,7 +1,7 @@
 package com.shanshan.eyepetizer.adapter.home.recommend
 
+import android.view.View
 import android.view.ViewGroup
-import androidx.core.graphics.convertTo
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -11,7 +11,6 @@ import com.shanshan.eyepetizer.adapter.holder.SpecialTextHeader5ViewHolder
 import com.shanshan.eyepetizer.adapter.holder.SpecialVideoSmallCardViewHolder
 import com.shanshan.eyepetizer.ui.extension.conversionVideoDuration
 import com.shanshan.eyepetizer.ui.extension.load
-import com.shanshan.eyepetizer.utils.LogUtils
 
 class RecommendAdapter :
     PagingDataAdapter<HomeRecommendData.Item, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
@@ -33,13 +32,8 @@ class RecommendAdapter :
         }
     }
 
-    override fun getItemCount(): Int {
-        LogUtils.d(TAG, "count ---> ")
-        return super.getItemCount()
-    }
-
     override fun getItemViewType(position: Int): Int {
-        return RecyclerViewUtil.getItemViewType(getItem(position)!!)
+        return RecyclerViewUtil.getInnerItemViewType(getItem(position)!!)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

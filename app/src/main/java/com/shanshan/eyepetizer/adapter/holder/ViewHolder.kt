@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.shanshan.eyepetizer.R
 import com.shanshan.eyepetizer.data.HomeDailyData
@@ -174,8 +173,68 @@ object RecyclerViewUtil {
         }
     }
 
+    //返回条目类型
+    fun getInnerItemViewType(item: Item): Int {
+        return when (item.type) {
+            "textCard" -> getTextCardType(item.data.type, item.data.dataType)
+
+            "briefCard" -> getTextItemCardType(item.data.dataType, item.data.follow.itemType)
+
+            "columnCardList" -> getInnerItemViewType(item.type, item.data.dataType)
+
+            else -> getInnerItemViewType(item.type, item.data.dataType)
+        }
+    }
+
+    fun getInnerItemViewType(item: HomeRecommendData.Item): Int {
+        return when (item.type) {
+            "textCard" -> getTextCardType(item.data.type, item.data.dataType)
+            else -> getInnerItemViewType(item.type, item.data.dataType)
+        }
+    }
+
+    fun getInnerItemViewType(item: HomeDailyData.Item): Int {
+        return when (item.type) {
+            "textCard" -> getTextCardType(item.data.type, item.data.dataType)
+            else -> getInnerItemViewType(item.type, item.data.dataType)
+        }
+    }
+
+    /**
+     * 获取标题header的item类型
+     */
+    private fun getTextCardType(type: String, dataType: String): Int {
+        return when (type) {
+            "header4" -> ItemViewType.TEXT_CARD_HEADER4
+            "header5" -> ItemViewType.TEXT_CARD_HEADER5
+            "header7" -> ItemViewType.TEXT_CARD_HEADER7
+            "header8" -> ItemViewType.TEXT_CARD_HEADER8
+            "footer2" -> ItemViewType.TEXT_CARD_FOOTER2
+            "footer3" -> ItemViewType.TEXT_CARD_FOOTER3
+            else -> ItemViewType.UNKNOWN
+        }
+    }
+
+    /**
+     * 获取每个标题下item的类型
+     */
+    private fun getTextItemCardType(dataType: String, followType: String): Int {
+        return when (dataType) {
+            "BriefCard" ->
+                when (followType) {
+                    "category" -> ItemViewType.CARD_TYPE_BRIEF
+                    "author" -> ItemViewType.TAG_BRIEF_CARD
+                    else -> ItemViewType.UNKNOWN
+                }
+            "TagBriefCard" -> {
+                ItemViewType.TAG_BRIEF_CARD
+            }
+            else -> ItemViewType.UNKNOWN
+        }
+    }
+
     //获取条目类型,嵌套存在的，比如首页banner或者栏目这种
-    private fun getItemViewType(type: String, dataType: String) = when (type) {
+    private fun getInnerItemViewType(type: String, dataType: String) = when (type) {
         "horizontalScrollCard" -> when (dataType) {
             "HorizontalScrollCard" -> ItemViewType.HorizontalScroll_TYPE
             else -> ItemViewType.UNKNOWN
@@ -197,66 +256,5 @@ object RecyclerViewUtil {
         }
 
         else -> ItemViewType.UNKNOWN
-    }
-
-    //返回条目类型
-    fun getItemViewType(item: Item): Int {
-        return when (item.type) {
-            "textCard" -> getTextCardType(item.data.type, item.data.dataType)
-
-            "briefCard" -> getTextItemCardType(item.data.dataType, item.data.follow.itemType)
-
-            "columnCardList" -> getItemViewType(item.type, item.data.dataType)
-
-            else -> getItemViewType(item.type, item.data.dataType)
-        }
-    }
-
-    /**
-     * 获取每个标题下item的类型
-     */
-    private fun getTextItemCardType(dataType: String, followType: String): Int {
-        return when (dataType) {
-            "BriefCard" ->
-                when (followType) {
-                    "category" -> ItemViewType.CARD_TYPE_BRIEF
-                    "author" -> ItemViewType.TAG_BRIEF_CARD
-                    else -> ItemViewType.UNKNOWN
-                }
-            "TagBriefCard" -> {
-                LogUtils.d("TAG", "TagBriefCard")
-                ItemViewType.TAG_BRIEF_CARD
-            }
-            else -> ItemViewType.UNKNOWN
-        }
-    }
-
-    /**
-     * 获取标题header的item类型
-     */
-    private fun getTextCardType(type: String, dataType: String): Int {
-        return when (type) {
-            "header4" -> ItemViewType.TEXT_CARD_HEADER4
-            "header5" -> ItemViewType.TEXT_CARD_HEADER5
-            "header7" -> ItemViewType.TEXT_CARD_HEADER7
-            "header8" -> ItemViewType.TEXT_CARD_HEADER8
-            "footer2" -> ItemViewType.TEXT_CARD_FOOTER2
-            "footer3" -> ItemViewType.TEXT_CARD_FOOTER3
-            else -> ItemViewType.UNKNOWN
-        }
-    }
-
-    fun getItemViewType(item: HomeRecommendData.Item): Int {
-        return when (item.type) {
-            "textCard" -> getTextCardType(item.data.type, item.data.dataType)
-            else -> getItemViewType(item.type, item.data.dataType)
-        }
-    }
-
-    fun getItemViewType(item: HomeDailyData.Item): Int {
-        return when (item.type) {
-            "textCard" -> getTextCardType(item.data.type, item.data.dataType)
-            else -> getItemViewType(item.type, item.data.dataType)
-        }
     }
 }

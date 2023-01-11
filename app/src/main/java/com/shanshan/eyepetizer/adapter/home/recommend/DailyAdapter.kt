@@ -32,7 +32,7 @@ class DailyAdapter : PagingDataAdapter<HomeDailyData.Item, RecyclerView.ViewHold
     }
 
     override fun getItemViewType(position: Int): Int {
-        return RecyclerViewUtil.getItemViewType(getItem(position)!!)
+        return RecyclerViewUtil.getInnerItemViewType(getItem(position)!!)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

@@ -1,12 +1,7 @@
 package com.shanshan.eyepetizer.ui.fragment.homepage
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.LinearLayout
-import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,12 +9,11 @@ import com.scwang.smart.refresh.layout.constant.RefreshState
 import com.shanshan.eyepetizer.R
 import com.shanshan.eyepetizer.adapter.home.recommend.DailyAdapter
 import com.shanshan.eyepetizer.base.BaseFragment
-import com.shanshan.eyepetizer.databinding.FragmentDailyBinding
+import com.shanshan.eyepetizer.databinding.FragmentCommBinding
 import com.shanshan.eyepetizer.viewmodel.HomeDailyViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class DailyFragment : BaseFragment<FragmentDailyBinding, HomeDailyViewModel>() {
+class DailyFragment : BaseFragment<FragmentCommBinding, HomeDailyViewModel>() {
 
     private lateinit var adapter: DailyAdapter
 
@@ -102,10 +96,6 @@ class DailyFragment : BaseFragment<FragmentDailyBinding, HomeDailyViewModel>() {
         }
     }
 
-    override fun initView() {
-
-    }
-
     override fun initData() {
 
     }
@@ -115,6 +105,6 @@ class DailyFragment : BaseFragment<FragmentDailyBinding, HomeDailyViewModel>() {
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.fragment_daily
+        return R.layout.fragment_comm
     }
 }

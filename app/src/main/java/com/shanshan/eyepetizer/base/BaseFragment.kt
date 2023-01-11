@@ -39,12 +39,10 @@ abstract class BaseFragment<V : ViewDataBinding, VM : ViewModel> : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initView()
+
         initObserver()
     }
 
-    //设置控件
-    abstract fun initView()
     //请求数据
     abstract fun initData()
 

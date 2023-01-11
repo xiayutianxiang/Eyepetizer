@@ -9,11 +9,11 @@ import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import com.shanshan.eyepetizer.R
 import com.shanshan.eyepetizer.adapter.DiscoveryPageAdapter
 import com.shanshan.eyepetizer.base.BaseFragment
-import com.shanshan.eyepetizer.databinding.FragmentDicoveryBinding
+import com.shanshan.eyepetizer.databinding.FragmentCommBinding
 import com.shanshan.eyepetizer.utils.LogUtils
 import com.shanshan.eyepetizer.viewmodel.DiscoveryViewModel
 
-class DiscoveryFragment : BaseFragment<FragmentDicoveryBinding, DiscoveryViewModel>(),
+class DiscoveryFragment : BaseFragment<FragmentCommBinding, DiscoveryViewModel>(),
     OnRefreshListener {
 
     private lateinit var adapter: DiscoveryPageAdapter
@@ -32,12 +32,8 @@ class DiscoveryFragment : BaseFragment<FragmentDicoveryBinding, DiscoveryViewMod
         binding.refresh.setEnableOverScrollBounce(false);//关闭越界回弹功能
     }
 
-    override fun initView() {
-
-    }
-
     override fun getLayoutId(): Int {
-        return R.layout.fragment_dicovery
+        return R.layout.fragment_comm
     }
 
     /**
@@ -51,10 +47,12 @@ class DiscoveryFragment : BaseFragment<FragmentDicoveryBinding, DiscoveryViewMod
         viewModel.discoveryData.observe(this, Observer {
             if (it != null) {
                 adapter = DiscoveryPageAdapter(this, it)
-                binding.homeRv.layoutManager = LinearLayoutManager(context)
-                binding.homeRv.adapter = adapter
-                binding.homeRv.setHasFixedSize(true)
-                binding.homeRv.itemAnimator = null
+                binding.recyclerView.layoutManager = LinearLayoutManager(context)
+                binding.recyclerView.adapter = adapter
+                binding.recyclerView.setHasFixedSize(true)
+                binding.recyclerView.itemAnimator = null
+                binding.loading.loading.visibility = View.GONE
+                LogUtils.d(TAG,"data --- > $it")
             }
         })
     }

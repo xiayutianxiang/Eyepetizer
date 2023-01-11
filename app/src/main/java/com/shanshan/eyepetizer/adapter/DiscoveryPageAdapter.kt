@@ -10,6 +10,7 @@ import com.shanshan.eyepetizer.adapter.banner.BannerViewAdapter
 import com.shanshan.eyepetizer.adapter.discovery.ColumnItemCollectionAdapter
 import com.shanshan.eyepetizer.adapter.holder.*
 import com.shanshan.eyepetizer.data.DiscoveryData
+import com.shanshan.eyepetizer.ui.extension.load
 import com.shanshan.eyepetizer.ui.fragment.homepage.DiscoveryFragment
 import com.shanshan.eyepetizer.utils.LogUtils
 import com.shanshan.eyepetizer.utils.ResourceUtils
@@ -26,8 +27,7 @@ class DiscoveryPageAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        LogUtils.d(TAG, "position ---> $position")
-        return RecyclerViewUtil.getItemViewType(dataList.itemList[position])
+        return RecyclerViewUtil.getInnerItemViewType(dataList.itemList[position])
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -59,8 +59,9 @@ class DiscoveryPageAdapter(
             }
 
             is SpecialCardTypeBriefCardHolder -> {
+                LogUtils.d(TAG, "text ---> ${item.data.title}")
                 holder.tvTitle.text = item.data.title
-                Glide.with(holder.itemView).load(item.data.icon).into(holder.ivPicture)
+                holder.ivPicture.load(item.data.icon)
             }
 
             is SpecialColumnCardListHolder -> {
@@ -76,7 +77,6 @@ class DiscoveryPageAdapter(
             }
 
             is SpecialTagBriefCardViewHolder -> {
-                LogUtils.d("TAG", item.data.icon)
                 Glide.with(holder.itemView.context).load(item.data.icon).into(holder.ivPicture)
                 holder.tvTitle.text = item.data.title
                 holder.tvDescription.text = item.data.description
@@ -85,7 +85,6 @@ class DiscoveryPageAdapter(
     }
 
     override fun getItemCount(): Int {
-        LogUtils.d(this.toString(), "size = {${dataList.itemList.size}}")
         return dataList.itemList.size
     }
 }

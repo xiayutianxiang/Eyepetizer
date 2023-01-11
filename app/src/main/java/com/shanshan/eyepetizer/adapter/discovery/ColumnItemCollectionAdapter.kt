@@ -11,7 +11,7 @@ import com.shanshan.eyepetizer.R
 import com.shanshan.eyepetizer.data.ItemX
 import com.shanshan.eyepetizer.utils.LogUtils
 
-class ColumnItemCollectionAdapter(val itemList: List<ItemX>) :
+class ColumnItemCollectionAdapter(private val itemList: List<ItemX>) :
     RecyclerView.Adapter<ColumnItemCollectionAdapter.ColumnItemCollectionHolder>() {
 
     companion object{
