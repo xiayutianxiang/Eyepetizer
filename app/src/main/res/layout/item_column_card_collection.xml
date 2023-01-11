@@ -23,13 +23,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/dimen_16dp">
 
             <com.shanshan.eyepetizer.ui.view.TypefaceTextView
                 android:id="@+id/squareCard_title"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/dimen_20dp"
-                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:gravity="center"
                 android:textColor="@color/white"
                 app:typeface="fzdb1Typeface"
                 tools:text="xxxx" />
@@ -37,7 +38,7 @@
             <com.shanshan.eyepetizer.ui.view.TypefaceTextView
                 android:id="@+id/squareCard_description"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/dimen_20dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textColor="@color/white"
                 app:typeface="fzdb1Typeface"

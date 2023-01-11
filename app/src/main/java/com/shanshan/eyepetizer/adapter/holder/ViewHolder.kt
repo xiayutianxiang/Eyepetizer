@@ -11,6 +11,7 @@ import com.shanshan.eyepetizer.data.HomeDailyData
 import com.shanshan.eyepetizer.data.Item
 import com.shanshan.eyepetizer.data.ItemX
 import com.shanshan.eyepetizer.databinding.ItemFollowCardTypeBinding
+import com.shanshan.eyepetizer.databinding.ItemSpecialSquareCardCollectionTypeBinding
 import com.shanshan.eyepetizer.databinding.ItemVideoSmallCardTypeBinding
 import com.shanshan.eyepetizer.utils.LogUtils
 import com.zhpan.bannerview.BannerViewPager
@@ -40,8 +41,12 @@ class SpecialCardTypeBriefCardHolder(itemView: View) : RecyclerView.ViewHolder(i
 
 class SpecialColumnCardListHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val tvTitle = itemView.findViewById<TextView>(R.id.tvTitle)
+    val tvRightText = itemView.findViewById<TextView>(R.id.tv_right_text)
     val columnRecyclerView = itemView.findViewById<RecyclerView>(R.id.column_card_recyclerView)
 }
+
+class SpecialSquareCardCollectionViewHolder(val binding: ItemSpecialSquareCardCollectionTypeBinding) :
+    RecyclerView.ViewHolder(binding.root)
 
 //右侧有文本 查看全部的
 class SpecialTextHeader7ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -137,6 +142,15 @@ object RecyclerViewUtil {
                 SpecialTextHeader7ViewHolder(
                     LayoutInflater.from(parent.context).inflate(
                         R.layout.item_special_text_header7,
+                        parent,
+                        false
+                    )
+                )
+
+            ItemViewType.SPECIAL_SQUARE_CARD_COLLECTION ->
+                SpecialSquareCardCollectionViewHolder(
+                    ItemSpecialSquareCardCollectionTypeBinding.inflate(
+                        LayoutInflater.from(parent.context),
                         parent,
                         false
                     )
@@ -243,6 +257,13 @@ object RecyclerViewUtil {
         "columnCardList" -> when (dataType) {
             "ItemCollection" -> ItemViewType.COLUMN_CARD_LIST
             else -> ItemViewType.UNKNOWN
+        }
+
+        "specialSquareCardCollection" -> {
+            when (dataType) {
+                "ItemCollection" -> ItemViewType.SPECIAL_SQUARE_CARD_COLLECTION
+                else -> ItemViewType.UNKNOWN
+            }
         }
 
         "followCard" -> when (dataType) {
