@@ -12,6 +12,7 @@ import com.shanshan.eyepetizer.data.Item
 import com.shanshan.eyepetizer.data.ItemX
 import com.shanshan.eyepetizer.databinding.ItemFollowCardTypeBinding
 import com.shanshan.eyepetizer.databinding.ItemSpecialSquareCardCollectionTypeBinding
+import com.shanshan.eyepetizer.databinding.ItemSpecialTextHeader8Binding
 import com.shanshan.eyepetizer.databinding.ItemVideoSmallCardTypeBinding
 import com.shanshan.eyepetizer.utils.LogUtils
 import com.zhpan.bannerview.BannerViewPager
@@ -53,6 +54,9 @@ class SpecialTextHeader7ViewHolder(itemView: View) : RecyclerView.ViewHolder(ite
     val tvTitle = itemView.findViewById<TextView>(R.id.tvTitle)
     val tvRightText = itemView.findViewById<TextView>(R.id.tv_right_text)
 }
+
+class SpecialTextHeader8ViewHolder(val binding: ItemSpecialTextHeader8Binding) :
+    RecyclerView.ViewHolder(binding.root)
 
 class SpecialTagBriefCardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val ivPicture = itemView.findViewById<ImageView>(R.id.ivPicture)
@@ -112,6 +116,15 @@ object RecyclerViewUtil {
                 SpecialTextHeader5ViewHolder(
                     LayoutInflater.from(parent.context).inflate(
                         R.layout.item_special_text_header5,
+                        parent,
+                        false
+                    )
+                )
+
+            ItemViewType.TEXT_CARD_HEADER8 ->
+                SpecialTextHeader8ViewHolder(
+                    ItemSpecialTextHeader8Binding.inflate(
+                        LayoutInflater.from(parent.context),
                         parent,
                         false
                     )

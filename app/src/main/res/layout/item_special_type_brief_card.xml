@@ -30,6 +30,7 @@
                 android:layout_gravity="center"
                 android:textColor="@color/white"
                 android:textSize="14sp"
+                android:textStyle="bold"
                 app:typeface="fzdb1Typeface"
                 tools:text="#广告" />
         </androidx.cardview.widget.CardView>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:paddingHorizontal="@dimen/listSpaceSize"
+        tools:visibility="visible">
+
+        <com.shanshan.eyepetizer.ui.view.TypefaceTextView
+            android:id="@+id/tvTitle8"
+            android:layout_width="wrap_content"
+            android:layout_height="53dp"
+            android:gravity="center"
+            android:textSize="22sp"
+            app:typeface="fzdb1Typeface"
+            tools:text="本周榜单" />
+
+        <com.shanshan.eyepetizer.ui.view.TypefaceTextView
+            android:id="@+id/tvRightText8"
+            android:layout_width="wrap_content"
+            android:layout_height="53dp"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@id/tvTitle8"
+            android:drawableEnd="@drawable/ic_into_blue_24dp"
+            android:gravity="center_vertical|end"
+            android:textColor="@color/blue"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:typeface="fzdb1Typeface"
+            tools:text="查看全部" />
+
+    </RelativeLayout>
+</layout>

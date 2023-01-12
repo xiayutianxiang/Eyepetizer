@@ -17,7 +17,8 @@ import java.lang.reflect.ParameterizedType
 
 abstract class BaseFragment<V : ViewDataBinding, VM : ViewModel> : Fragment() {
 
-    lateinit var binding: V
+    private var _binding: V?=null
+    val binding get() = _binding!!
 
     lateinit var viewModel: VM
 
@@ -28,7 +29,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : ViewModel> : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(layoutInflater, getLayoutId(), container, false)
+        _binding = DataBindingUtil.inflate(layoutInflater, getLayoutId(), container, false)
 
         //viewModel = ViewModelProvider.NewInstanceFactory().create(viewModel::class.java)
         initModel()
@@ -72,5 +73,10 @@ abstract class BaseFragment<V : ViewDataBinding, VM : ViewModel> : Fragment() {
                 e.printStackTrace()
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

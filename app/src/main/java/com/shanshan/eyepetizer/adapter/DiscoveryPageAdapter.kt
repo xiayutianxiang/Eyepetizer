@@ -105,10 +105,22 @@ class DiscoveryPageAdapter(
                 holder.tvRightText.text = item.data.rightText
             }
 
+            is SpecialTextHeader8ViewHolder -> {
+                LogUtils.d(TAG,"item ---> ${item.data}")
+                holder.binding.tvTitle8.text = item.data.text
+                holder.binding.tvRightText8.text = item.data.rightText
+            }
+
             is SpecialTagBriefCardViewHolder -> {
                 Glide.with(holder.itemView.context).load(item.data.icon).into(holder.ivPicture)
                 holder.tvTitle.text = item.data.title
                 holder.tvDescription.text = item.data.description
+            }
+
+            is SpecialVideoSmallCardViewHolder -> {
+                holder.binding.tvTitle.text = item.data.title
+                holder.binding.tvDescription.text = item.data.description
+                holder.binding.ivPicture.load(item.data.cover.feed, 4f)
             }
         }
     }

@@ -28,6 +28,7 @@ class DiscoveryViewModel : ViewModel() {
                 LogUtils.d(this.toString(), "response code -->${code}")
                 if (code == HttpURLConnection.HTTP_OK) {
                     discoveryData.postValue(response.body())
+                    LogUtils.d("discoveryData",response.body().toString())
                 }
             }
 
