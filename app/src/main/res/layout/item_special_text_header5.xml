@@ -6,16 +6,17 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingStart="@dimen/listSpaceSize"
+    android:layout_marginTop="@dimen/dimen_15dp"
     tools:ignore="RtlSymmetry">
 
     <com.shanshan.eyepetizer.ui.view.TypefaceTextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="19dp"
         android:gravity="center"
         android:textColor="@color/colorTextPrimaryDark"
         android:textSize="22sp"
+        android:drawableEnd="@drawable/ic_into_gray_24dp"
         app:typeface="fzdb1Typeface"
         tools:text="热门分类" />
 

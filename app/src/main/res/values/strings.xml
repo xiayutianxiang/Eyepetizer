@@ -15,7 +15,8 @@
     <string name="title_activity_main">MainActivity</string>
 
     <string name="advert">广告</string>
-
+    <string name="srl_footer_nothing">没有更多数据了</string>
+    <string name="footer_not_more">- The End -</string>
     <!-- 网络 -->
     <string name="network_error">网络错误</string>
     <string name="error_view_tip">点击屏幕重试</string>
