@@ -1,6 +1,7 @@
 package com.shanshan.eyepetizer.network.api
 
 import HomeRecommendData
+import com.shanshan.eyepetizer.data.CommunityRecommendData
 import com.shanshan.eyepetizer.data.DiscoveryData
 import com.shanshan.eyepetizer.data.HomeDailyData
 import retrofit2.Call
@@ -25,5 +26,11 @@ interface ApiService {
      * 首页-日报列表
      */
     @GET
-    suspend fun getDaily(@Url url:String) : HomeDailyData
+    suspend fun getDaily(@Url url: String): HomeDailyData
+
+    /**
+     * 社区-推荐列表
+     */
+    @GET
+    suspend fun getCommunityCommend(@Url url: String): CommunityRecommendData
 }

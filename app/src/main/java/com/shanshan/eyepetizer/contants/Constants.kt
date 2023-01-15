@@ -15,6 +15,8 @@ class Constants {
             const val RECOMMEND_URL = "${BASE_URL}api/v5/index/tab/allRec"
 
             const val DAILY_URL = "${BASE_URL}api/v5/index/tab/feed"
+
+            const val COMMUNITY_RECOMMEND_URL = "${BASE_URL}api/v7/community/tab/rec"
         }
     }
 
