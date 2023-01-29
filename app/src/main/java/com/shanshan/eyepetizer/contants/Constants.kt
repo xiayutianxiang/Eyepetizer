@@ -21,7 +21,8 @@ class Constants {
     }
 
     companion object {
-        const val RECOMMEND_PAGE_SIZE = 5
-        const val DAILY_PAGE_SIZE = 22
+        const val HOME_RECOMMEND_PAGE_SIZE = 5
+        const val HOME_DAILY_PAGE_SIZE = 22
+        const val COMMUNITY_RECOMMEND_PAGE_SIZE = 11
     }
 }

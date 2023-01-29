@@ -26,7 +26,6 @@ class CommunityCommendPagingSource : PagingSource<String, CommunityRecommendData
             LogUtils.d(TAG, "repoItems ---> $repoItems")
             val preKey = null
             val nextKey =
-
                 if (repoItems.isNotEmpty() && repoResponse.nextPageUrl.isNotEmpty()) repoResponse.nextPageUrl else null
             LoadResult.Page(repoItems, preKey, nextKey)
         } catch (e: Exception) {

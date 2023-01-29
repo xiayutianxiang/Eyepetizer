@@ -46,7 +46,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun initViewPager() {
-        homeAdapter = fragmentManager?.let { HomeViewPageAdapter(it, lifecycle, fragments) }
+        homeAdapter = HomeViewPageAdapter(parentFragmentManager, lifecycle, fragments)
         binding.homePage.adapter = homeAdapter
 
         //绑定ViewPage2

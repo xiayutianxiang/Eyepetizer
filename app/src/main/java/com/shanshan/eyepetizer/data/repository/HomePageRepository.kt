@@ -20,8 +20,8 @@ class HomePageRepository {
     fun getHomeRecommendPagingData(): Flow<PagingData<HomeRecommendData.Item>> {
         return Pager(
             config = PagingConfig(
-                Constants.RECOMMEND_PAGE_SIZE,
-                initialLoadSize = Constants.RECOMMEND_PAGE_SIZE * 3
+                Constants.HOME_RECOMMEND_PAGE_SIZE,
+                initialLoadSize = Constants.HOME_RECOMMEND_PAGE_SIZE * 3
             ),
             pagingSourceFactory = { HomeRecommendPagingSource() }
         ).flow
@@ -31,8 +31,8 @@ class HomePageRepository {
     fun getHomeDailyPagingData(): Flow<PagingData<HomeDailyData.Item>> {
         return Pager(
             config = PagingConfig(
-                Constants.DAILY_PAGE_SIZE,
-                initialLoadSize = Constants.DAILY_PAGE_SIZE * 3
+                Constants.HOME_DAILY_PAGE_SIZE,
+                initialLoadSize = Constants.HOME_DAILY_PAGE_SIZE * 3
             ),
             pagingSourceFactory = { HomeDailyPagingSource() }
         ).flow

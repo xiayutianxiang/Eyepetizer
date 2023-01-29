@@ -1,5 +1,6 @@
 package com.shanshan.eyepetizer.adapter.holder
 
+import android.content.ClipData
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,13 +8,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.shanshan.eyepetizer.R
+import com.shanshan.eyepetizer.data.CommunityRecommendData
 import com.shanshan.eyepetizer.data.HomeDailyData
 import com.shanshan.eyepetizer.data.Item
 import com.shanshan.eyepetizer.data.ItemX
-import com.shanshan.eyepetizer.databinding.ItemFollowCardTypeBinding
-import com.shanshan.eyepetizer.databinding.ItemSpecialSquareCardCollectionTypeBinding
-import com.shanshan.eyepetizer.databinding.ItemSpecialTextHeader8Binding
-import com.shanshan.eyepetizer.databinding.ItemVideoSmallCardTypeBinding
+import com.shanshan.eyepetizer.databinding.*
 import com.shanshan.eyepetizer.utils.LogUtils
 import com.zhpan.bannerview.BannerViewPager
 
@@ -70,6 +69,9 @@ class SpecialFollowCardViewHolder(val binding: ItemFollowCardTypeBinding) :
 class SpecialVideoSmallCardViewHolder(val binding: ItemVideoSmallCardTypeBinding) :
     RecyclerView.ViewHolder(binding.root)
 
+class SpecialHorizontalScrollCardItemCollectionViewHolder(val binding: ItemCommunityHorizontalScrollcardItemCollectionTypeBinding) :
+    RecyclerView.ViewHolder(binding.root)
+
 /**
  * 条目类型
  */
@@ -94,6 +96,8 @@ class ItemViewType {
         const val FOLLOW_CARD = 14
 
         const val VIDEO_SMALL_CARD = 15
+
+        const val ITEM_COLLECTION = 16
     }
 }
 
@@ -196,6 +200,15 @@ object RecyclerViewUtil {
                     )
                 )
 
+            ItemViewType.ITEM_COLLECTION ->
+                SpecialHorizontalScrollCardItemCollectionViewHolder(
+                    ItemCommunityHorizontalScrollcardItemCollectionTypeBinding.inflate(
+                        LayoutInflater.from(
+                            parent.context
+                        ), parent, false
+                    )
+                )
+
             else -> EmptyViewHolder(View(parent.context))
         }
     }
@@ -223,6 +236,13 @@ object RecyclerViewUtil {
     fun getInnerItemViewType(item: HomeDailyData.Item): Int {
         return when (item.type) {
             "textCard" -> getTextCardType(item.data.type, item.data.dataType)
+            else -> getInnerItemViewType(item.type, item.data.dataType)
+        }
+    }
+
+    fun getInnerItemViewType(item: CommunityRecommendData.Item): Int {
+        return when (item.type) {
+            "textCard" -> getTextCardType(item.type, item.data.dataType)
             else -> getInnerItemViewType(item.type, item.data.dataType)
         }
     }
@@ -264,6 +284,7 @@ object RecyclerViewUtil {
     private fun getInnerItemViewType(type: String, dataType: String) = when (type) {
         "horizontalScrollCard" -> when (dataType) {
             "HorizontalScrollCard" -> ItemViewType.HorizontalScroll_TYPE
+            "ItemCollection" -> ItemViewType.ITEM_COLLECTION
             else -> ItemViewType.UNKNOWN
         }
 
