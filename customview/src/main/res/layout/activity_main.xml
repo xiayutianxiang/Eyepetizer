@@ -9,8 +9,14 @@
     tools:context=".MainActivity">
 
     <com.pax.customview.ProgressView
+        android:visibility="gone"
         android:layout_width="200dp"
         android:layout_height="200dp"
         app:mCirColor="@color/teal_200"
         app:mCirWidth="5dp" />
+
+    <com.pax.customview.TemperatureView
+        android:background="@color/gray"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"/>
 </LinearLayout>
