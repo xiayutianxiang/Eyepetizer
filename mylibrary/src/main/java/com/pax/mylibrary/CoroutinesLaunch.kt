@@ -37,13 +37,15 @@ fun main() {
      * 只是由编程语言决定多个协程之间如何调度，让哪个运行，哪个挂起，调度过程不需要操作系统参与
      */
     runBlocking {
-        /*launch {
+        launch {
+            val a = 5
             println("launch1")
             delay(1000)
             println("launch1 finished")
         }
 
         launch {
+            //此时无法调用到a
             println("launch2")
             delay(1000)
             println("launch2 finished")
@@ -53,7 +55,7 @@ fun main() {
             println("launch3")
             delay(1000)
             println("launch3 finished")
-        }*/
+        }
         launch {
 
             /**
