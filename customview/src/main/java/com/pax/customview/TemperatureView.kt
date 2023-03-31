@@ -4,14 +4,25 @@ import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
+import androidx.core.graphics.ColorUtils
+import java.text.DecimalFormat
+import java.util.*
 import kotlin.properties.Delegates
 
 class TemperatureView : View {
 
+    private val mSmallRadius = 0
+    private lateinit var mAnimTimer: Timer
+
+    private var mWaveUpValue: Int = 0
+    private lateinit var mCurTemperature: String
+    private var targetAngle: Float = 0.0f
+    private var totalAngle: Float = 0.0f
     private var centerPosition: Point = Point()
     private val mRecf = RectF()     //边界矩形
     private var radius by Delegates.notNull<Float>()  //半径
     private lateinit var mDegreeCirPaint: Paint
+    private lateinit var mDegreeLineCirPaint: Paint
 
     private var isAnim = false
     private var mDigit = 0
@@ -27,9 +38,11 @@ class TemperatureView : View {
     private var mValue: String? = null
     private var mMaxValue = 0f
     private var mStartAngle //起始角度
-            = 0f
+            = 120f
     private var mSweepAngle //滑过的角度
-            = 0f
+            = 300f
+
+    private var mTargetAngle = 300f //刻度的角度
     private var mValueSize = 0f
     private var mValueColor = 0
     private var mHint: String? = null
@@ -44,6 +57,13 @@ class TemperatureView : View {
     private var mGradientColor = 0
     private var mGradientColors = intArrayOf(Color.RED, Color.GRAY, Color.BLUE)
     private val mSweepGradient: SweepGradient? = null
+
+    //动画状态
+    private var isAnimRunning = false
+    private val slow = arrayOf(10, 10, 10, 8, 8, 8, 6, 6, 6, 4, 4, 4, 4, 2)
+
+    //动画的下标
+    private var goIndex = 0
 
     constructor(context: Context?) : this(context, null)
     constructor(context: Context?, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -94,6 +114,12 @@ class TemperatureView : View {
         mDegreeCirPaint.color = Color.WHITE
         mDegreeCirPaint.style = Paint.Style.STROKE
         mDegreeCirPaint.strokeCap = Paint.Cap.ROUND
+
+        mDegreeLineCirPaint = Paint()
+        mDegreeLineCirPaint.style = Paint.Style.STROKE
+        mDegreeLineCirPaint.strokeCap = Paint.Cap.SQUARE
+        mDegreeLineCirPaint.isAntiAlias = true
+        mDegreeLineCirPaint
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -136,8 +162,110 @@ class TemperatureView : View {
             false,
             mDegreeCirPaint
         )
+        drawDegreeLine(canvas)
+    }
 
+    private fun drawDegreeLine(canvas: Canvas) {
+        //先保存
+        canvas.save()
         //移动到中心点开始绘制
         canvas.translate(radius, radius)
+        //旋转坐标系，确定旋转的角度
+        canvas.rotate(30f)
+
+        //每次旋转的角度
+        val rotateAngle = mSweepAngle / 100
+        //累计叠加的角度
+        var currentAngle = 0f
+        for (i in 0..100) {
+            if (currentAngle <= mTargetAngle && mTargetAngle != 0f) {
+                //计算累计滑过的刻度百分比
+                val percent = currentAngle / mSweepAngle
+                //动态设置颜色
+                mDegreeLineCirPaint.color = ColorUtils.blendARGB(Color.GREEN, Color.RED, percent)
+
+                canvas.drawLine(0f, radius, 0f, radius - 20, mDegreeLineCirPaint)
+                //画过的角度累加
+                currentAngle += rotateAngle
+            } else {
+                mDegreeLineCirPaint.color = Color.WHITE
+                canvas.drawLine(0f, radius, 0f, radius - 20, mDegreeLineCirPaint)
+            }
+            //画完一个刻度，旋转位置
+            canvas.rotate(rotateAngle)
+        }
+        canvas.restore()
+    }
+
+    fun evaluateColor(percent: Float, colorStart: Int, colorEnd: Int): Int {
+        var redCurrent = 0
+        var blueCurrent = 0
+        var greenCurrent = 0
+        var alphaCurrent = 0
+
+        val redStart = Color.red(colorStart)
+        val blueStart = Color.blue(colorStart)
+        val greenStart = Color.green(colorStart)
+        val alphaStart = Color.alpha(colorStart)
+
+        val redEnd = Color.red(colorEnd)
+        val blueEnd = Color.blue(colorEnd)
+        val greenEnd = Color.green(colorEnd)
+        val alphaEnd = Color.alpha(colorEnd)
+
+        val redDifference = redEnd - redStart
+        val blueDifference = blueEnd - blueStart
+        val greenDifference = greenEnd - greenStart
+        val alphaDifference = alphaEnd - alphaStart
+
+        redCurrent = (redStart + percent * redDifference).toInt()
+        blueCurrent = (blueStart + percent * blueDifference).toInt()
+        greenCurrent = (greenStart + percent * greenDifference).toInt()
+        alphaCurrent = (alphaStart + percent * alphaDifference).toInt()
+
+        return Color.argb(alphaCurrent, redCurrent, blueCurrent, greenCurrent)
+    }
+
+    private var mCurPercent by Delegates.notNull<Float>()
+
+    //设置温度、入口的开始
+    fun setupTemperature(temperature: Float) {
+        mCurPercent = 0f
+        totalAngle = (temperature / 100) * mSweepAngle
+        targetAngle = 0f
+        mCurPercent = 0f
+        mCurTemperature = "0.0"
+        mWaveUpValue = 0
+    }
+
+    //使用定时任务做动画
+    fun startTimerAnim() {
+        if (isAnimRunning) {
+            return
+        }
+        mAnimTimer = Timer()
+        mAnimTimer.schedule(object : TimerTask() {
+            override fun run() {
+                isAnimRunning = true
+                targetAngle += slow[goIndex]
+                goIndex++
+                if (goIndex == slow.size) {
+                    goIndex--;
+                }
+                if (targetAngle >= totalAngle) {
+                    targetAngle = totalAngle
+                    isAnimRunning = false
+                    mAnimTimer.cancel()
+                }
+
+                //计算的温度
+                mCurPercent = targetAngle / mSweepAngle
+                mCurTemperature = DecimalFormat().format(mCurPercent * 100)
+                //水波纹的高度
+                mWaveUpValue = (mCurPercent * (mSmallRadius * 2)).toInt()
+
+                postInvalidate()
+            }
+        }, 250, 30)
     }
 }

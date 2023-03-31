@@ -16,6 +16,7 @@
         app:mCirWidth="5dp" />
 
     <com.pax.customview.TemperatureView
+        android:id="@+id/temperatureView"
         android:background="@color/gray"
         android:layout_width="300dp"
         android:layout_height="wrap_content"/>
