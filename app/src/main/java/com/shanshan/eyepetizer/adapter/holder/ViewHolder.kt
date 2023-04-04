@@ -69,7 +69,7 @@ class SpecialFollowCardViewHolder(val binding: ItemFollowCardTypeBinding) :
 class SpecialVideoSmallCardViewHolder(val binding: ItemVideoSmallCardTypeBinding) :
     RecyclerView.ViewHolder(binding.root)
 
-class SpecialHorizontalScrollCardItemCollectionViewHolder(val binding: ItemCommunityHorizontalScrollcardItemCollectionTypeBinding) :
+class HorizontalScrollCardViewHolder(val binding: ItemCommunityHorizontalScrollcardTypeBinding) :
     RecyclerView.ViewHolder(binding.root)
 
 /**
@@ -98,6 +98,7 @@ class ItemViewType {
         const val VIDEO_SMALL_CARD = 15
 
         const val ITEM_COLLECTION = 16
+        const val HORIZONTAL_SCROLLCARD_TYPE = 17
     }
 }
 
@@ -194,15 +195,6 @@ object RecyclerViewUtil {
             ItemViewType.VIDEO_SMALL_CARD ->
                 SpecialVideoSmallCardViewHolder(
                     ItemVideoSmallCardTypeBinding.inflate(
-                        LayoutInflater.from(
-                            parent.context
-                        ), parent, false
-                    )
-                )
-
-            ItemViewType.ITEM_COLLECTION ->
-                SpecialHorizontalScrollCardItemCollectionViewHolder(
-                    ItemCommunityHorizontalScrollcardItemCollectionTypeBinding.inflate(
                         LayoutInflater.from(
                             parent.context
                         ), parent, false

@@ -9,13 +9,21 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.shanshan.eyepetizer.R
-import com.shanshan.eyepetizer.adapter.holder.RecyclerViewUtil
-import com.shanshan.eyepetizer.adapter.holder.SpecialHorizontalScrollCardItemCollectionViewHolder
+import com.shanshan.eyepetizer.adapter.holder.EmptyViewHolder
+import com.shanshan.eyepetizer.adapter.holder.HorizontalScrollCardHolder
+import com.shanshan.eyepetizer.adapter.holder.ItemViewType
 import com.shanshan.eyepetizer.data.CommunityRecommendData
+import com.shanshan.eyepetizer.databinding.ItemCommunityHorizontalScrollcardItemCollectionTypeBinding
+import com.shanshan.eyepetizer.databinding.ItemCommunityHorizontalScrollcardTypeBinding
 import com.shanshan.eyepetizer.ui.extension.load
 import com.shanshan.eyepetizer.ui.fragment.communitypage.CommunityRecommendFragment
 import com.shanshan.eyepetizer.ui.view.TypefaceTextView
+import com.shanshan.eyepetizer.utils.ResourceUtils
+import com.shanshan.eyepetizer.utils.dp2px
+import com.zhpan.bannerview.BaseBannerAdapter
+import com.zhpan.bannerview.BaseViewHolder
 
 class RecommendAdapter(val fragment: CommunityRecommendFragment) :
     PagingDataAdapter<CommunityRecommendData.Item, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
@@ -23,6 +31,22 @@ class RecommendAdapter(val fragment: CommunityRecommendFragment) :
     companion object {
 
         private const val TAG = "RecommendAdapter"
+        const val STR_HORIZONTAL_SCROLLCARD_TYPE = "horizontalScrollCard"
+        const val STR_COMMUNITY_COLUMNS_CARD = "communityColumnsCard"
+
+        const val STR_HORIZONTAL_SCROLLCARD_DATA_TYPE = "HorizontalScrollCard"
+        const val STR_ITEM_COLLECTION_DATA_TYPE = "ItemCollection"
+        const val STR_FOLLOW_CARD_DATA_TYPE = "FollowCard"
+
+        const val STR_VIDEO_TYPE = "video"
+        const val STR_UGC_PICTURE_TYPE = "ugcPicture"
+
+        const val HORIZONTAL_SCROLLCARD_ITEM_COLLECTION_TYPE =
+            1   //type:horizontalScrollCard -> dataType:ItemCollection
+        const val HORIZONTAL_SCROLLCARD_TYPE =
+            2                   //type:horizontalScrollCard -> dataType:HorizontalScrollCard
+        const val FOLLOW_CARD_TYPE =
+            3                             //type:communityColumnsCard -> dataType:FollowCard
 
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<CommunityRecommendData.Item>() {
             override fun areItemsTheSame(
@@ -42,28 +66,124 @@ class RecommendAdapter(val fragment: CommunityRecommendFragment) :
     }
 
     override fun getItemViewType(position: Int): Int {
-        return RecyclerViewUtil.getInnerItemViewType(getItem(position)!!)
+        val item = getItem(position)
+        return when (item?.type) {
+            STR_HORIZONTAL_SCROLLCARD_TYPE -> {
+                when (item.data.dataType) {
+                    STR_ITEM_COLLECTION_DATA_TYPE -> HORIZONTAL_SCROLLCARD_ITEM_COLLECTION_TYPE
+                    STR_HORIZONTAL_SCROLLCARD_DATA_TYPE -> HORIZONTAL_SCROLLCARD_TYPE
+                    else -> ItemViewType.UNKNOWN
+                }
+            }
+            STR_COMMUNITY_COLUMNS_CARD -> {
+                if (item.data.dataType == STR_FOLLOW_CARD_DATA_TYPE) FOLLOW_CARD_TYPE
+                else ItemViewType.UNKNOWN
+            }
+            else -> ItemViewType.UNKNOWN
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            HORIZONTAL_SCROLLCARD_ITEM_COLLECTION_TYPE -> {
+                SpecialHorizontalScrollCardItemCollectionViewHolder(
+                    ItemCommunityHorizontalScrollcardItemCollectionTypeBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
+                    )
+                )
+            }
+            HORIZONTAL_SCROLLCARD_TYPE -> {
+                HorizontalScrollCardViewHolder(
+                    ItemCommunityHorizontalScrollcardTypeBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
+                    )
+                )
+            }
+            else -> EmptyViewHolder(View(parent.context))
+        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = getItem(position)!!
         when (holder) {
+            //主题、话题部分
             is SpecialHorizontalScrollCardItemCollectionViewHolder -> {
-                holder.binding.recyclerView.layoutManager =
-                    LinearLayoutManager(fragment.context).apply {
-                        orientation = LinearLayoutManager.HORIZONTAL
+                (holder.itemView.layoutParams as StaggeredGridLayoutManager.LayoutParams).isFullSpan =
+                    true
+                val layoutManager = object : LinearLayoutManager(fragment.context) {
+                    override fun canScrollHorizontally(): Boolean {
+                        return false
                     }
-                holder.binding.recyclerView.addItemDecoration(
-                    SquareCardOfCommunityContentItemDecoration(fragment)
-                )
+                }
+                layoutManager.orientation = LinearLayoutManager.HORIZONTAL
+                holder.binding.recyclerView.layoutManager = layoutManager
+
+                if (holder.binding.recyclerView.itemDecorationCount == 0) {
+                    holder.binding.recyclerView.addItemDecoration(
+                        SquareCardOfCommunityContentItemDecoration(fragment)
+                    )
+                }
                 holder.binding.recyclerView.adapter =
-                    HorizontalScrollCardItemCollectionAdapter(item.data.itemList)
+                    HorizontalScrollCardItemCollectionAdapter(fragment, item.data.itemList)
+            }
+
+            //轮播图
+            is HorizontalScrollCardViewHolder -> {
+                (holder.itemView.layoutParams as StaggeredGridLayoutManager.LayoutParams).isFullSpan =
+                    true
+                holder.binding.bannerViewPager.run {
+                    setCanLoop(true)
+                    setRoundCorner(dp2px(4f))
+                    setRevealWidth(0, ResourceUtils.getDimen(R.dimen.listSpaceSize))
+                    if (item.data.itemList.size == 1) setPageMargin(0) else setPageMargin(dp2px(4f))
+                    setIndicatorVisibility(View.GONE)
+                    removeDefaultPageTransformer()
+                    setAdapter(BannerAdapter())
+                    create(item.data.itemList)
+                }
             }
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return RecyclerViewUtil.getItemViewHolder(parent, viewType)
+    /**
+     * holder部分
+     */
+    class SpecialHorizontalScrollCardItemCollectionViewHolder(val binding: ItemCommunityHorizontalScrollcardItemCollectionTypeBinding) :
+        RecyclerView.ViewHolder(binding.root)
+
+    class HorizontalScrollCardViewHolder(val binding: ItemCommunityHorizontalScrollcardTypeBinding) :
+        RecyclerView.ViewHolder(binding.root)
+
+    /**
+     * 社区整个垂直列表的间隙
+     */
+    class ItemDecoration(val fragment: CommunityRecommendFragment) : RecyclerView.ItemDecoration() {
+
+        override fun getItemOffsets(
+            outRect: Rect,
+            view: View,
+            parent: RecyclerView,
+            state: RecyclerView.State
+        ) {
+            val spanIndex = (view.layoutParams as StaggeredGridLayoutManager.LayoutParams).spanIndex
+
+            outRect.top = fragment.bothSideSpace
+
+            when (spanIndex) {
+                0 -> {
+                    outRect.left = fragment.bothSideSpace
+                    outRect.right = fragment.middleSpace
+                }
+                else -> {
+                    outRect.left = fragment.middleSpace
+                    outRect.right = fragment.bothSideSpace
+                }
+            }
+        }
     }
 
     //item间距
@@ -96,13 +216,18 @@ class RecommendAdapter(val fragment: CommunityRecommendFragment) :
         }
     }
 
-    //主题创作、话题讨论的adapter
-    class HorizontalScrollCardItemCollectionAdapter(var itemList: List<CommunityRecommendData.Item.Data.Item>) :
+    /**
+     * 主题创作、话题讨论的adapter
+     */
+    class HorizontalScrollCardItemCollectionAdapter(
+        var fragment: CommunityRecommendFragment,
+        var itemList: List<CommunityRecommendData.Item.Data.Item>
+    ) :
         RecyclerView.Adapter<HorizontalScrollCardItemCollectionAdapter.InnerHolder>() {
         override fun onCreateViewHolder(
             parent: ViewGroup,
             viewType: Int
-        ): HorizontalScrollCardItemCollectionAdapter.InnerHolder {
+        ): InnerHolder {
             return InnerHolder(
                 LayoutInflater.from(parent.context).inflate(
                     R.layout.item_community_horizontal_scroll_card_itemcollection_item_type,
@@ -111,17 +236,18 @@ class RecommendAdapter(val fragment: CommunityRecommendFragment) :
             )
         }
 
-        inner class InnerHolder(view: View) : RecyclerView.ViewHolder(view) {
+        class InnerHolder(view: View) : RecyclerView.ViewHolder(view) {
             val ivBgPicture: AppCompatImageView = view.findViewById(R.id.ivBgPicture)
             val tvTitle: TypefaceTextView = view.findViewById(R.id.tvTitle)
             val tvSubTitle: TypefaceTextView = view.findViewById(R.id.tvSubTitle)
         }
 
         override fun onBindViewHolder(
-            holder: HorizontalScrollCardItemCollectionAdapter.InnerHolder,
+            holder: InnerHolder,
             position: Int
         ) {
             val item = itemList[position]
+            holder.ivBgPicture.layoutParams.width = fragment.maxImageWidth
             holder.ivBgPicture.load(item.data.bgPicture)
             holder.tvTitle.text = item.data.title
             holder.tvSubTitle.text = item.data.subTitle
@@ -130,5 +256,13 @@ class RecommendAdapter(val fragment: CommunityRecommendFragment) :
         override fun getItemCount(): Int {
             return itemList.size
         }
+    }
+
+    class BannerAdapter : BaseBannerAdapter<CommunityRecommendData.Item, BannerAdapter.ViewHolder>() {
+        class ViewHolder {
+
+        }
+
+
     }
 }
