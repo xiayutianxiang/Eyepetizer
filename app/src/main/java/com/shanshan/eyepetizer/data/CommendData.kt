@@ -1,6 +1,6 @@
 package com.shanshan.eyepetizer.data
 
-data class CommunityRecommendData(
+data class CommendData(
     val adExist: Boolean,
     val count: Int,
     val itemList: List<Item>,
@@ -55,12 +55,12 @@ data class CommunityRecommendData(
                     val playUrlWatermark: String,
                     val privateMessageActionUrl: Any,
                     val reallyCollected: Boolean,
-                    val recentOnceReply: Any,
+                    val recentOnceReply: RecentOnceReply,
                     val releaseTime: Long,
                     val resourceType: String,
                     val selectedTime: Any,
                     val source: String,
-                    val status: Any,
+                    val status: Int,
                     val tags: List<Tag>,
                     val title: String,
                     val transId: Any,
@@ -97,11 +97,11 @@ data class CommunityRecommendData(
                         val birthday: Long,
                         val city: String,
                         val country: String,
-                        val cover: Any,
-                        val description: Any,
+                        val cover: String,
+                        val description: String,
                         val expert: Boolean,
                         val followed: Boolean,
-                        val gender: Any,
+                        val gender: String,
                         val ifPgc: Boolean,
                         val job: String,
                         val library: String,
@@ -112,6 +112,14 @@ data class CommunityRecommendData(
                         val uid: Int,
                         val university: String,
                         val userType: String
+                    )
+
+                    data class RecentOnceReply(
+                        val actionUrl: String,
+                        val contentType: Any,
+                        val dataType: String,
+                        val message: String,
+                        val nickname: String
                     )
 
                     data class Tag(
@@ -127,11 +135,26 @@ data class CommunityRecommendData(
                         val id: Int,
                         val ifNewest: Boolean,
                         val name: String,
-                        val newestEndTime: Any,
+                        val newestEndTime: Long,
                         val tagRecType: String
                     )
                 }
             }
+
+            data class Header(
+                val actionUrl: String,
+                val followType: String,
+                val icon: String,
+                val iconType: String,
+                val id: Int,
+                val issuerName: String,
+                val labelList: Any,
+                val showHateVideo: Boolean,
+                val tagId: Int,
+                val tagName: Any,
+                val time: Long,
+                val topShow: Boolean
+            )
 
             data class Item(
                 val adIndex: Int,
@@ -180,21 +203,6 @@ data class CommunityRecommendData(
                     )
                 }
             }
-
-            data class Header(
-                val actionUrl: String,
-                val followType: String,
-                val icon: String,
-                val iconType: String,
-                val id: Int,
-                val issuerName: String,
-                val labelList: Any,
-                val showHateVideo: Boolean,
-                val tagId: Int,
-                val tagName: Any,
-                val time: Long,
-                val topShow: Boolean
-            )
         }
     }
 }

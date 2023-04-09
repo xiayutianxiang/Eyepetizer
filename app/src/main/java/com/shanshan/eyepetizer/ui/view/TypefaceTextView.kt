@@ -55,7 +55,7 @@ class TypefaceTextView : AppCompatTextView {
             TypeFaceUtil.FUTURA_TYPEFACE -> TypeFaceUtil.futuraTypeface
             TypeFaceUtil.DIN_TYPEFACE -> TypeFaceUtil.dinTypeface
             TypeFaceUtil.LOBSTER_TYPEFACE -> TypeFaceUtil.lobsterTypeface
-            else -> Typeface.DEFAULT
+            else -> TypeFaceUtil.fzlLTypeface
         }
     }
 }

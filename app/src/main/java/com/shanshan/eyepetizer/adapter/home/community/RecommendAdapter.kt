@@ -4,6 +4,7 @@ import android.graphics.Rect
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -12,18 +13,23 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.shanshan.eyepetizer.R
 import com.shanshan.eyepetizer.adapter.holder.EmptyViewHolder
-import com.shanshan.eyepetizer.adapter.holder.HorizontalScrollCardHolder
 import com.shanshan.eyepetizer.adapter.holder.ItemViewType
 import com.shanshan.eyepetizer.data.CommunityRecommendData
+import com.shanshan.eyepetizer.databinding.ItemCommunityColumnsCardFollowCardTypeBinding
 import com.shanshan.eyepetizer.databinding.ItemCommunityHorizontalScrollcardItemCollectionTypeBinding
 import com.shanshan.eyepetizer.databinding.ItemCommunityHorizontalScrollcardTypeBinding
+import com.shanshan.eyepetizer.ui.extension.gone
+import com.shanshan.eyepetizer.ui.extension.invisible
 import com.shanshan.eyepetizer.ui.extension.load
+import com.shanshan.eyepetizer.ui.extension.visible
 import com.shanshan.eyepetizer.ui.fragment.communitypage.CommunityRecommendFragment
 import com.shanshan.eyepetizer.ui.view.TypefaceTextView
+import com.shanshan.eyepetizer.utils.LogUtils
 import com.shanshan.eyepetizer.utils.ResourceUtils
 import com.shanshan.eyepetizer.utils.dp2px
 import com.zhpan.bannerview.BaseBannerAdapter
 import com.zhpan.bannerview.BaseViewHolder
+import kotlin.time.Duration.Companion.days
 
 class RecommendAdapter(val fragment: CommunityRecommendFragment) :
     PagingDataAdapter<CommunityRecommendData.Item, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
@@ -75,10 +81,12 @@ class RecommendAdapter(val fragment: CommunityRecommendFragment) :
                     else -> ItemViewType.UNKNOWN
                 }
             }
+
             STR_COMMUNITY_COLUMNS_CARD -> {
                 if (item.data.dataType == STR_FOLLOW_CARD_DATA_TYPE) FOLLOW_CARD_TYPE
                 else ItemViewType.UNKNOWN
             }
+
             else -> ItemViewType.UNKNOWN
         }
     }
@@ -94,6 +102,7 @@ class RecommendAdapter(val fragment: CommunityRecommendFragment) :
                     )
                 )
             }
+
             HORIZONTAL_SCROLLCARD_TYPE -> {
                 HorizontalScrollCardViewHolder(
                     ItemCommunityHorizontalScrollcardTypeBinding.inflate(
@@ -103,6 +112,17 @@ class RecommendAdapter(val fragment: CommunityRecommendFragment) :
                     )
                 )
             }
+
+            FOLLOW_CARD_TYPE -> {
+                FollowCardViewHolder(
+                    ItemCommunityColumnsCardFollowCardTypeBinding.inflate(
+                        LayoutInflater.from(parent.context),
+                        parent,
+                        false
+                    )
+                )
+            }
+
             else -> EmptyViewHolder(View(parent.context))
         }
     }
@@ -138,13 +158,44 @@ class RecommendAdapter(val fragment: CommunityRecommendFragment) :
                 holder.binding.bannerViewPager.run {
                     setCanLoop(true)
                     setRoundCorner(dp2px(4f))
+                    setAdapter(BannerViewPager())
                     setRevealWidth(0, ResourceUtils.getDimen(R.dimen.listSpaceSize))
                     if (item.data.itemList.size == 1) setPageMargin(0) else setPageMargin(dp2px(4f))
                     setIndicatorVisibility(View.GONE)
                     removeDefaultPageTransformer()
-                    setAdapter(BannerAdapter())
                     create(item.data.itemList)
                 }
+            }
+
+            is FollowCardViewHolder -> {
+                holder.binding.tvChoiceness.gone()
+                holder.binding.ivPlay.gone()
+                holder.binding.ivLayers.gone()
+
+                if ((item.data.header.iconType ?: "".trim()) == "round") {
+                    holder.binding.ivAvatar.invisible()
+                    holder.binding.ivRoundAvatar.visible()
+                    holder.binding.ivRoundAvatar.load(item.data.content.data.owner.avatar)
+                } else {
+                    holder.binding.ivRoundAvatar.gone()
+                    holder.binding.ivAvatar.visible()
+                    holder.binding.ivAvatar.load(item.data.content.data.owner.avatar)
+                }
+
+                holder.binding.ivBgPicture.run {
+                    val imageHeight = calculateImageHeight(
+                        item.data.content.data.width,
+                        item.data.content.data.height
+                    )
+                    layoutParams.width = fragment.maxImageWidth
+                    layoutParams.height = imageHeight
+                    load(item.data.content.data.cover.feed)
+                }
+
+                holder.binding.tvDescription.text = item.data.content.data.description
+                holder.binding.tvNickName.text = item.data.content.data.owner.nickname
+                holder.binding.tvCollectionCount.text =
+                    item.data.content.data.consumption.collectionCount.toString()
             }
         }
     }
@@ -178,6 +229,7 @@ class RecommendAdapter(val fragment: CommunityRecommendFragment) :
                     outRect.left = fragment.bothSideSpace
                     outRect.right = fragment.middleSpace
                 }
+
                 else -> {
                     outRect.left = fragment.middleSpace
                     outRect.right = fragment.bothSideSpace
@@ -204,16 +256,34 @@ class RecommendAdapter(val fragment: CommunityRecommendFragment) :
                     /*outRect.left = fragment.bothSideSpace*/
                     outRect.right = fragment.middleSpace
                 }
+
                 count -> {
                     outRect.left = fragment.middleSpace
                     /*outRect.right = fragment.bothSideSpace*/
                 }
+
                 else -> {
                     outRect.left = fragment.middleSpace
                     outRect.right = fragment.middleSpace
                 }
             }
         }
+    }
+
+    /**
+     * 根据屏幕比例计算图片高
+     *
+     * @param originalWidth   服务器图片原始尺寸：宽
+     * @param originalHeight  服务器图片原始尺寸：高
+     * @return 根据比例缩放后的图片高
+     */
+    private fun calculateImageHeight(originalWidth: Int, originalHeight: Int): Int {
+        //服务器数据异常处理
+        if (originalWidth == 0 || originalHeight == 0) {
+            LogUtils.d(TAG, ResourceUtils.getString(R.string.image_size_error))
+            return fragment.maxImageWidth
+        }
+        return fragment.maxImageWidth * originalHeight / originalWidth
     }
 
     /**
@@ -258,11 +328,28 @@ class RecommendAdapter(val fragment: CommunityRecommendFragment) :
         }
     }
 
-    class BannerAdapter : BaseBannerAdapter<CommunityRecommendData.Item, BannerAdapter.ViewHolder>() {
-        class ViewHolder {
-
+    /**
+     * 轮播图的adapter
+     */
+    inner class BannerViewPager : BaseBannerAdapter<CommunityRecommendData.Item.Data.Item>() {
+        override fun bindData(
+            holder: BaseViewHolder<CommunityRecommendData.Item.Data.Item>,
+            data: CommunityRecommendData.Item.Data.Item,
+            position: Int,
+            pageSize: Int
+        ) {
+            val ivPicture = holder.findViewById<ImageView>(R.id.ivPicture)
+            ivPicture.load(data.data.image)
         }
 
-
+        override fun getLayoutId(viewType: Int): Int {
+            return R.layout.item_banner_item_type
+        }
     }
+
+    /**
+     * 瀑布流布局的holder
+     */
+    inner class FollowCardViewHolder(val binding: ItemCommunityColumnsCardFollowCardTypeBinding) :
+        RecyclerView.ViewHolder(binding.root)
 }

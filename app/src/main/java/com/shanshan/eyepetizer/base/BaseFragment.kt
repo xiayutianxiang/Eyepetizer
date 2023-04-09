@@ -1,6 +1,5 @@
 package com.shanshan.eyepetizer.base
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
-import com.shanshan.eyepetizer.data.Item
 import java.lang.reflect.ParameterizedType
 
 

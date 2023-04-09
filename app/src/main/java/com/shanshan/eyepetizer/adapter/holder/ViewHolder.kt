@@ -1,6 +1,5 @@
 package com.shanshan.eyepetizer.adapter.holder
 
-import android.content.ClipData
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import com.shanshan.eyepetizer.data.HomeDailyData
 import com.shanshan.eyepetizer.data.Item
 import com.shanshan.eyepetizer.data.ItemX
 import com.shanshan.eyepetizer.databinding.*
-import com.shanshan.eyepetizer.utils.LogUtils
 import com.zhpan.bannerview.BannerViewPager
 
 /**

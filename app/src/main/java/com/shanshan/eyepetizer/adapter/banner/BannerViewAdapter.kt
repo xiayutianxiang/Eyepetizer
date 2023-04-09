@@ -1,10 +1,8 @@
 package com.shanshan.eyepetizer.adapter.banner
 
 import android.widget.ImageView
-import androidx.appcompat.widget.AppCompatImageView
 import com.bumptech.glide.Glide
 import com.shanshan.eyepetizer.R
-import com.shanshan.eyepetizer.data.Item
 import com.shanshan.eyepetizer.data.ItemX
 import com.zhpan.bannerview.BaseBannerAdapter
 import com.zhpan.bannerview.BaseViewHolder
