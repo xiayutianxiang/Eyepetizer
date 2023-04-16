@@ -16,7 +16,11 @@ class Constants {
 
             const val DAILY_URL = "${BASE_URL}api/v5/index/tab/feed"
 
+            //社区-推荐列表
             const val COMMUNITY_RECOMMEND_URL = "${BASE_URL}api/v7/community/tab/rec"
+
+            //社区-关注列表
+            const val COMMUNITY_FOLLOW_URL = "${BASE_URL}api/v6/community/tab/follow"
         }
     }
 
@@ -24,5 +28,6 @@ class Constants {
         const val HOME_RECOMMEND_PAGE_SIZE = 5
         const val HOME_DAILY_PAGE_SIZE = 22
         const val COMMUNITY_RECOMMEND_PAGE_SIZE = 11
+        const val COMMUNITY_FOLLOW_PAGE_SIZE = 5
     }
 }

@@ -11,7 +11,7 @@ import com.shanshan.eyepetizer.R
 import com.shanshan.eyepetizer.adapter.HomeViewPageAdapter
 import com.shanshan.eyepetizer.databinding.FragmentCommunityBinding
 import com.shanshan.eyepetizer.ui.fragment.communitypage.CommunityRecommendFragment
-import com.shanshan.eyepetizer.ui.fragment.communitypage.CommunityRegardFragment
+import com.shanshan.eyepetizer.ui.fragment.communitypage.CommunityFollowFragment
 import com.shanshan.eyepetizer.ui.view.CommunityTabLayout
 import com.shanshan.eyepetizer.utils.LogUtils
 
@@ -24,7 +24,7 @@ class CommunityFragment : Fragment() {
 
     init {
         fragments.add(CommunityRecommendFragment.newInstance())
-        fragments.add(CommunityRegardFragment.getInstance())
+        fragments.add(CommunityFollowFragment.getInstance())
     }
 
     companion object {

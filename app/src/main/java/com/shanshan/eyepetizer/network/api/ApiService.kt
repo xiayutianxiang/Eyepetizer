@@ -1,6 +1,7 @@
 package com.shanshan.eyepetizer.network.api
 
 import HomeRecommendData
+import com.shanshan.eyepetizer.data.CommunityFollowData
 import com.shanshan.eyepetizer.data.CommunityRecommendData
 import com.shanshan.eyepetizer.data.DiscoveryData
 import com.shanshan.eyepetizer.data.HomeDailyData
@@ -33,4 +34,10 @@ interface ApiService {
      */
     @GET
     suspend fun getCommunityCommend(@Url url: String): CommunityRecommendData
+
+    /**
+     * 社区关注列表
+     */
+    @GET
+    suspend fun getCommunityFollow(@Url url: String) : CommunityFollowData
 }

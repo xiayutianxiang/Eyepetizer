@@ -2,6 +2,8 @@ package com.shanshan.eyepetizer.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.view.Window
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.shanshan.eyepetizer.R
@@ -13,6 +15,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+       // window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)

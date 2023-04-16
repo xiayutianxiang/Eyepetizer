@@ -196,6 +196,21 @@ class RecommendAdapter(val fragment: CommunityRecommendFragment) :
                 holder.binding.tvNickName.text = item.data.content.data.owner.nickname
                 holder.binding.tvCollectionCount.text =
                     item.data.content.data.consumption.collectionCount.toString()
+
+                when (item.data.content.type) {
+                    STR_VIDEO_TYPE -> {
+                        holder.binding.ivPlay.visible()
+                        holder.itemView.setOnClickListener {
+
+                        }
+                    }
+
+                    STR_UGC_PICTURE_TYPE -> {
+                        if (item.data.content.data.urls.isNotEmpty() && item.data.content.data.urls.size > 1) {
+                            holder.binding.ivLayers.visible()
+                        }
+                    }
+                }
             }
         }
     }
