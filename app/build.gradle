@@ -85,6 +85,8 @@ dependencies {
     implementation 'com.scwang.smart:refresh-header-material:2.0.3'
     implementation 'com.scwang.smart:refresh-layout-kernel:2.0.3'
 
+    //video player引入
+    implementation 'com.github.CarGuo.GSYVideoPlayer:GSYVideoPlayer:v8.1.6-jitpack'
     //轮播图
     implementation 'com.github.zhpanvip:BannerViewPager:3.5.11'
 

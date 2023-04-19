@@ -38,4 +38,6 @@
     <string name="image_size_error">图片尺寸错误</string>
     <string name="release">"发布: "</string>
     <string name="favorites">收藏</string>
+    <string name="days_ago">天前</string>
+    <string name="weeks_ago">周前</string>
 </resources>

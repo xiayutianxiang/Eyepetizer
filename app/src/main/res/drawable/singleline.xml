@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- &lt;!&ndash;底层使用蓝色填充&ndash;&gt;
+     <item>
+         <shape>
+             <solid android:color="#02a0ef"/>
+         </shape>
+     </item>
+
+     &lt;!&ndash;上面一层距离底部顶层10dp,填充为白色&ndash;&gt;
+     <item android:top="@dimen/dimen_10dp"
+         android:bottom="@dimen/dimen_10dp"
+         android:left="@dimen/dimen_10dp"
+         android:right="@dimen/dimen_10dp">
+         <shape>
+             <solid android:color="#fff"/>
+         </shape>
+     </item>-->
+
+    <!--阴影-->
+    <!--底层的左边距离上层左边3dp，底层的底部距离层的顶部6dp-->
+    <item
+        android:left="@dimen/dimen_10dp"
+        android:top="@dimen/dimen_16dp">
+        <shape>
+            <solid android:color="#b4b5b6" />
+        </shape>
+    </item>
+
+    <item
+        android:bottom="@dimen/dimen_10dp"
+        android:right="@dimen/dimen_10dp">
+        <shape>
+            <solid android:color="#fff" />
+        </shape>
+    </item>
+</layer-list>

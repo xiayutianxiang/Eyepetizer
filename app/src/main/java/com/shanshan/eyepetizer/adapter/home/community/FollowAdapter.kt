@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.shanshan.eyepetizer.R
 import com.shanshan.eyepetizer.data.CommunityFollowData
 import com.shanshan.eyepetizer.databinding.ItemCommunityAutoPlayFollowCardFollowCardTypeBinding
+import com.shanshan.eyepetizer.ui.extension.conversionVideoDuration
 import com.shanshan.eyepetizer.ui.extension.load
+import com.shanshan.eyepetizer.utils.DateUtil
 
 class FollowAdapter :
     PagingDataAdapter<CommunityFollowData.Item, FollowAdapter.FollowViewHolder>(DIFF_CALLBACK) {
@@ -40,7 +42,15 @@ class FollowAdapter :
     override fun onBindViewHolder(holder: FollowViewHolder, position: Int) {
         val item = getItem(position)!!
         holder.binding.ivAvatar.load(item.data.header.icon)
-        holder.binding.tvNickname.text = item.data.content.data.author.name
+        item.data.content.data.apply {
+            holder.binding.tvNickname.text = author.name
+            holder.binding.tvReleaseTime.text = DateUtil.getDate(releaseTime,"HH:mm")
+            holder.binding.tvTitle.text = title
+            holder.binding.tvContent.text = description
+            holder.binding.tvCollectionCount.text = consumption.collectionCount.toString()
+            holder.binding.tvReplyCount.text = consumption.replyCount.toString()
+            holder.binding.tvVideoDuration.text = duration.conversionVideoDuration()
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FollowViewHolder {

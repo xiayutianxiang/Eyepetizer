@@ -34,4 +34,5 @@
     <color name="gray">#ededed</color>
     <color name="grayDark">#adadad</color>
     <color name="loading">#cdcdcd</color>
+    <color name="colorAccent">#61f2d4</color>
 </resources>
