@@ -2,6 +2,7 @@ package com.shanshan.eyepetizer.adapter.home.community
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -11,8 +12,13 @@ import com.shanshan.eyepetizer.R
 import com.shanshan.eyepetizer.data.CommunityFollowData
 import com.shanshan.eyepetizer.databinding.ItemCommunityAutoPlayFollowCardFollowCardTypeBinding
 import com.shanshan.eyepetizer.ui.extension.conversionVideoDuration
+import com.shanshan.eyepetizer.ui.extension.gone
 import com.shanshan.eyepetizer.ui.extension.load
+import com.shanshan.eyepetizer.ui.extension.visible
+import com.shanshan.eyepetizer.utils.AutoPlayUtil
 import com.shanshan.eyepetizer.utils.DateUtil
+import com.shuyu.gsyvideoplayer.GSYVideoManager
+import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack
 
 class FollowAdapter :
     PagingDataAdapter<CommunityFollowData.Item, FollowAdapter.FollowViewHolder>(DIFF_CALLBACK) {
@@ -50,6 +56,9 @@ class FollowAdapter :
             holder.binding.tvCollectionCount.text = consumption.collectionCount.toString()
             holder.binding.tvReplyCount.text = consumption.replyCount.toString()
             holder.binding.tvVideoDuration.text = duration.conversionVideoDuration()
+            holder.binding.tvVideoDuration.visible()    //开始播放后，隐藏tvVideoDuration
+            AutoPlayUtil.autoPlay(holder.binding.videoPlayer,holder.itemView.context,
+            playUrl,playUrl, position,null,cover.feed)
         }
     }
 

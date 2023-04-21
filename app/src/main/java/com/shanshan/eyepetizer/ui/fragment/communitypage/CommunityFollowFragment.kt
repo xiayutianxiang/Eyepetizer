@@ -10,9 +10,9 @@ import com.shanshan.eyepetizer.R
 import com.shanshan.eyepetizer.adapter.home.community.FollowAdapter
 import com.shanshan.eyepetizer.base.BaseFragment
 import com.shanshan.eyepetizer.databinding.FragmentCommBinding
+import com.shanshan.eyepetizer.ui.view.AutoPlayListener
 import com.shanshan.eyepetizer.viewmodel.CommunityCommendViewModel
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
+import com.shuyu.gsyvideoplayer.GSYVideoManager
 import kotlinx.coroutines.launch
 
 class CommunityFollowFragment : BaseFragment<FragmentCommBinding, CommunityCommendViewModel>() {
@@ -22,7 +22,7 @@ class CommunityFollowFragment : BaseFragment<FragmentCommBinding, CommunityComme
     }
 
     companion object {
-        fun getInstance() = CommunityFollowFragment()
+        fun newInstance() = CommunityFollowFragment()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -31,7 +31,7 @@ class CommunityFollowFragment : BaseFragment<FragmentCommBinding, CommunityComme
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
 
         binding.recyclerView.adapter = followAdapter
-
+        binding.recyclerView.addOnScrollListener(AutoPlayListener(activity,followAdapter))
         lifecycleScope.launch {
             viewModel.getCommunityFollowContent().collect {
                 followAdapter.submitData(it)
@@ -81,5 +81,21 @@ class CommunityFollowFragment : BaseFragment<FragmentCommBinding, CommunityComme
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_comm
+    }
+
+    override fun onPause() {
+        super.onPause()
+        GSYVideoManager.onPause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        GSYVideoManager.onResume()
+    }
+
+    override fun onDestroy() {
+        GSYVideoManager.releaseAllVideos()
+        binding.recyclerView.clearOnScrollListeners()
+        super.onDestroy()
     }
 }

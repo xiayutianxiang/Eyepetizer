@@ -22,11 +22,6 @@ class CommunityFragment : Fragment() {
     private var fragments = ArrayList<Fragment>()
     private var homeAdapter: HomeViewPageAdapter? = null
 
-    init {
-        fragments.add(CommunityRecommendFragment.newInstance())
-        fragments.add(CommunityFollowFragment.getInstance())
-    }
-
     companion object {
         private const val TAG = "CommunityFragment"
     }
@@ -37,14 +32,19 @@ class CommunityFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_community, container, false)
-
-        initListener()
+        initFragment()
+        initViewPager()
 
         return binding.root
     }
 
-    private fun initListener() {
-        homeAdapter = HomeViewPageAdapter(parentFragmentManager, lifecycle, fragments)
+    private fun initFragment() {
+        fragments.add(CommunityRecommendFragment.newInstance())
+        fragments.add(CommunityFollowFragment.newInstance())
+    }
+
+    private fun initViewPager() {
+        homeAdapter = HomeViewPageAdapter(requireActivity() ,fragments)
         binding.homePage.adapter = homeAdapter
         binding.homePage.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {

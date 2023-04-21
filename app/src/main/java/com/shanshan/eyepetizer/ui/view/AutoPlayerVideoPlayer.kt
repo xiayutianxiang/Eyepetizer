@@ -39,6 +39,7 @@ class AutoPlayerVideoPlayer : StandardGSYVideoPlayer {
         mBrightness = false
     }
 
+    //更新 开始 按图片
     override fun updateStartImage() {
         if (mStartButton is ImageView) {
             val imageView = mStartButton as ImageView
