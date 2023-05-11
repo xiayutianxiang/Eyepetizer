@@ -14,18 +14,19 @@ object AutoPlayUtil {
         playTag: String?,
         playUrl:String,
         position: Int,
-        callback: GSYSampleCallBack?,
-        imageUrl: String
+        imageUrl: String,
+        callback: GSYSampleCallBack?
     ) {
         player.run {
-            setPlayTag(playTag)
-            playPosition = position
-            isReleaseWhenLossAudio = false
-
+            setPlayTag(playTag)     //防止错位
+            playPosition = position     //设置播放位置防止错位
+            isReleaseWhenLossAudio = false  //音频焦点冲突时是否释放
+            isLooping = false       //循环播放
             val cover = ImageView(context)
             cover.load(imageUrl)
-            thumbImageView = cover
-            setUp(playUrl,false,null)
+            thumbImageView = cover          //封面
+            setVideoAllCallBack(callback)   //播放过程中的回调
+            setUp(playUrl,false,null)   //播放url
         }
     }
 }

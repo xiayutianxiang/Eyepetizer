@@ -12,6 +12,9 @@
     <string name="home_daily">日报</string>
     <string name="community_recommend">推荐</string>
     <string name="community_follow">关注</string>
+    <string name="notice_push">推送</string>
+    <string name="notice_interaction">互动</string>
+    <string name="notice_private_messages">关注</string>
 
     <string name="plus_follow">+关注</string>
     <string name="title_activity_main">MainActivity</string>
@@ -40,4 +43,18 @@
     <string name="favorites">收藏</string>
     <string name="days_ago">天前</string>
     <string name="weeks_ago">周前</string>
+
+
+    <string name="currently_not_supported">该功能即将开放，敬请期待</string>
+    <string name="jump_page_unknown_error">跳转界面出现未知异常</string>
+    <string name="your_phone_does_not_install_qq">您的手机还没有安装QQ</string>
+    <string name="your_phone_does_not_install_wechat">您的手机还没有安装微信</string>
+    <string name="your_phone_does_not_install_weibo">您的手机还没有安装微博</string>
+    <string name="your_phone_does_not_install_qq_zone">您的手机还没有安装QQ空间</string>
+    <string name="request_permission_picture_processing">需要存储权限来处理您的图片信息</string>
+    <string name="request_permission_access_phone_info">开眼视频推荐和观看记录等功能，需要访问手机识别码等信息</string>
+    <string name="slogan">- Your contribution is highly appreciated! -</string>
+    <string name="slogan_two">Daily appetizersfor your eyes. Bon eyepétit.</string>
+    <string name="slogan_description">让每一个人都开眼，开了又开。</string>
+    <string name="slogan_description_two">每日精选视频推介，让你大开眼界。</string>
 </resources>

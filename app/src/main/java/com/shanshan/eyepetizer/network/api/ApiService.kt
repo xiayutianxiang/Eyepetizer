@@ -1,10 +1,7 @@
 package com.shanshan.eyepetizer.network.api
 
 import HomeRecommendData
-import com.shanshan.eyepetizer.data.CommunityFollowData
-import com.shanshan.eyepetizer.data.CommunityRecommendData
-import com.shanshan.eyepetizer.data.DiscoveryData
-import com.shanshan.eyepetizer.data.HomeDailyData
+import com.shanshan.eyepetizer.data.*
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Url
@@ -40,4 +37,10 @@ interface ApiService {
      */
     @GET
     suspend fun getCommunityFollow(@Url url: String) : CommunityFollowData
+
+    /**
+     * 通知列表
+     */
+    @GET
+    suspend fun getNoticeFollow(@Url url: String) : NoticePushData
 }

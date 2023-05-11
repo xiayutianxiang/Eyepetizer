@@ -1,14 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.fragment.NoticeFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <data>
+
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="通知" />
+        android:orientation="vertical"
+        tools:context=".ui.fragment.NoticeFragment">
 
-</FrameLayout>
+        <com.shanshan.eyepetizer.ui.view.CommTabLayout
+            android:id="@+id/notice_tab"
+            android:scrollIndicators="end"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_44dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/notice_page"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+</layout>

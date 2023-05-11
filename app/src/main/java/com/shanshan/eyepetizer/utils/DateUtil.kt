@@ -48,8 +48,9 @@ object DateUtil {
      * @return 转换过后的时间格式，如2分钟前，1小时前。
      */
     fun getConvertedDate(dateMillis: Long): String {
-        val currentMillis = System.currentTimeMillis()
-        val timePast = currentMillis - dateMillis
+        val currentMillis = System.currentTimeMillis()      //先拿到当前的时间
+        val timePast = currentMillis - dateMillis           //减去传进来的时间
+
         if (timePast > -MINUTE) { // 采用误差一分钟以内的算法，防止客户端和服务器时间不同步导致的显示问题
             when {
                 /*timePast < HOUR -> {
