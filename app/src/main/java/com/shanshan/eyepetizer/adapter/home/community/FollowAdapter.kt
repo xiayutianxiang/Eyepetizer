@@ -1,12 +1,16 @@
 package com.shanshan.eyepetizer.adapter.home.community
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.shanshan.eyepetizer.contants.Constants
 import com.shanshan.eyepetizer.data.CommunityFollowData
+import com.shanshan.eyepetizer.data.VideoInfo
 import com.shanshan.eyepetizer.databinding.ItemCommunityAutoPlayFollowCardFollowCardTypeBinding
+import com.shanshan.eyepetizer.ui.activity.DetailVideoActivity
 import com.shanshan.eyepetizer.ui.extension.conversionVideoDuration
 import com.shanshan.eyepetizer.ui.extension.gone
 import com.shanshan.eyepetizer.ui.extension.load
@@ -54,11 +58,18 @@ class FollowAdapter :
             holder.binding.tvCollectionCount.text = consumption.collectionCount.toString()
             holder.binding.tvReplyCount.text = consumption.replyCount.toString()
             holder.binding.tvVideoDuration.text = duration.conversionVideoDuration()
-            holder.binding.tvVideoDuration.visible()    //开始播放后，隐藏tvVideoDuration
+            holder.binding.tvVideoDuration.gone()    //开始播放后，隐藏tvVideoDuration
             AutoPlayUtil.autoPlay(
                 holder.binding.videoPlayer, holder.itemView.context,
-                TAG, playUrl, position, cover.feed, GSYFollowCallBack(holder)
+                TAG, playUrl, position, cover.feed, GSYFollowCallBack(holder,this)
             )
+
+            holder.binding.ivReply.setOnClickListener {
+                holder.itemView.context.startActivity(Intent(holder.itemView.context,DetailVideoActivity::class.java).putExtra(
+                    Constants.EXTRA_VIDEOINFO,VideoInfo(id, playUrl, title, description, category, library,consumption, cover,
+                        author, webUrl)
+                ))
+            }
         }
     }
 
@@ -75,7 +86,10 @@ class FollowAdapter :
     inner class FollowViewHolder(val binding: ItemCommunityAutoPlayFollowCardFollowCardTypeBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-    inner class GSYFollowCallBack(private val holder: FollowViewHolder) : GSYSampleCallBack() {
+    inner class GSYFollowCallBack(
+        private val holder: FollowViewHolder,
+        private val data: CommunityFollowData.Item.Data.Content.Data
+    ) : GSYSampleCallBack() {
         override fun onPrepared(url: String?, vararg objects: Any?) {
             super.onPrepared(url, *objects)
             holder.binding.tvVideoDuration.gone()
@@ -91,6 +105,10 @@ class FollowAdapter :
         override fun onClickBlank(url: String?, vararg objects: Any?) {
             super.onClickBlank(url, *objects)
             holder.binding.tvVideoDuration.visible()
+
+            holder.itemView.context.startActivity(Intent(holder.itemView.context,DetailVideoActivity::class.java).putExtra(
+                Constants.EXTRA_VIDEOINFO,VideoInfo(data.id, data.playUrl, data.title, data.description, data.category, data.library, data.consumption, data.cover, data.author!!, data.webUrl)
+            ))
         }
     }
 }

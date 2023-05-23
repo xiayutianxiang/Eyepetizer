@@ -32,6 +32,10 @@ class Constants {
         const val HOME_DAILY_PAGE_SIZE = 22
         const val COMMUNITY_RECOMMEND_PAGE_SIZE = 11
         const val COMMUNITY_FOLLOW_PAGE_SIZE = 5
+
+
+        const val EXTRA_VIDEOINFO = "videoInfo"
+        const val EXTRA_VIDEO_ID = "videoId"
     }
 
     interface ActionUrl {

@@ -19,7 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Eyepetizer">
         <activity
-            android:name=".ui.activity.VideoPlayerActivity"
+            android:name=".ui.activity.DetailVideoActivity"
             android:exported="true" />
         <activity
             android:name=".ui.activity.MainActivity"

@@ -38,7 +38,7 @@ data class CommunityFollowData(
                     val category: String,
                     val collected: Boolean,
                     val consumption: Consumption,
-                    val cover: Cover,
+                    val cover: Cover2,
                     val dataType: String,
                     val date: Long,
                     val description: String,
@@ -46,7 +46,7 @@ data class CommunityFollowData(
                     val descriptionPgc: String,
                     val duration: Int,
                     val favoriteAdTrack: Any,
-                    val id: Int,
+                    val id: Long,
                     val idx: Int,
                     val ifLimitVideo: Boolean,
                     val label: Any,
@@ -80,49 +80,6 @@ data class CommunityFollowData(
                     val webAdTrack: Any,
                     val webUrl: WebUrl
                 ) {
-                    data class Author(
-                        val adTrack: Any,
-                        val approvedNotReadyVideoCount: Int,
-                        val description: String,
-                        val expert: Boolean,
-                        val follow: Follow,
-                        val icon: String,
-                        val id: Int,
-                        val ifPgc: Boolean,
-                        val latestReleaseTime: Long,
-                        val link: String,
-                        val name: String,
-                        val recSort: Int,
-                        val shield: Shield,
-                        val videoNum: Int
-                    ) {
-                        data class Follow(
-                            val followed: Boolean,
-                            val itemId: Int,
-                            val itemType: String
-                        )
-
-                        data class Shield(
-                            val itemId: Int,
-                            val itemType: String,
-                            val shielded: Boolean
-                        )
-                    }
-
-                    data class Consumption(
-                        val collectionCount: Int,
-                        val realCollectionCount: Int,
-                        val replyCount: Int,
-                        val shareCount: Int
-                    )
-
-                    data class Cover(
-                        val blurred: String,
-                        val detail: String,
-                        val feed: String,
-                        val homepage: String,
-                        val sharing: Any
-                    )
 
                     data class PlayInfo(
                         val height: Int,
@@ -166,11 +123,6 @@ data class CommunityFollowData(
                         val fileSizeStr: String,
                         val scale: Double,
                         val url: String
-                    )
-
-                    data class WebUrl(
-                        val forWeibo: String,
-                        val raw: String
                     )
                 }
             }
